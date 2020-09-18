@@ -13,23 +13,33 @@ package qwirkle;
 public class BoardMatrix {
     
     
-    private static BoardMatrix board = new BoardMatrix();
-    private int columns = 2;
-    private int lines = 2;
-    private String[][] matrix;
+    private static BoardMatrix board;
+    private int columns = 20;
+    private int lines = 20;
+    private static String[][] matrix;
     
     private BoardMatrix(){
-        matrix = new String [lines][columns];
+        this.matrix = new String [lines][columns];
+        fillMatrix();
+        matrix [10][12] = "r-4";
+        matrix [10][11] = "b-4";
+        matrix [11][12] = "y-4";
     }
     private void fillMatrix(){
-        for(int i = 0; i > lines; i++){
-            for(int j = 0; i > columns; j++){
-                matrix[i][j] = "";
+        for(int i = 0; i < lines; i++){
+            for(int j = 0; j < columns; j++){
+                
+                matrix[i][j] = "k";
+                System.out.println(i + " " + j + ":" + matrix[i][j] );
+                
             }
         }
     }
     
     public static BoardMatrix getBoardMatrix(){
+        if(board == null){
+           board = new BoardMatrix();
+        }
         return board;
     }
     

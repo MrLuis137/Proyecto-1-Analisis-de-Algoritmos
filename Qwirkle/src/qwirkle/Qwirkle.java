@@ -16,13 +16,15 @@ public class Qwirkle extends PApplet{
     /**
      * @param args the command line arguments
      */
-    Board board = new Board();
+    Board board = new Board(this);
+    boolean presionado = false;
     
     public static void main(String[] args) {
         
-        PApplet.main("qwirkle.Qwirkle");
+        String[] appletArgs = new String[] { "qwirkle.Qwirkle" };
+        PApplet.main(appletArgs);
         BoardMatrix matriz = BoardMatrix.getBoardMatrix();
-        System.out.println(matriz.getTile(0, 0));
+        //System.out.println(matriz.getTile(0, 0));
     }
     @Override
     public void settings(){
@@ -34,9 +36,23 @@ public class Qwirkle extends PApplet{
         clear();
         stroke(0);
         strokeWeight(1);
+        background(255);
         board.run();
-       
-        
+    }
+    
+    @Override
+    public void mouseDragged() {
+        if(presionado) {
+            board.arrastrado();
+        }
+    }
+    @Override
+    public void mousePressed(){
+        presionado = true;
+    }
+    @Override
+    public void mouseReleased(){
+    presionado = false;
     }
     
 }

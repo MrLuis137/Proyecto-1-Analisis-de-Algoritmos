@@ -13,18 +13,19 @@ import qwirkle.BoardMatrix;
 import java.util.ArrayList;
 import processing.core.PApplet;
 
-public class Board extends PApplet{
-  ArrayList<Tile> tilees = new ArrayList<Tile>();  
+public class Board{
+  ArrayList<Tile> tilees = new ArrayList<>();  
 
   String[][] g;
+  private PApplet sketch;
   BoardMatrix matrix = BoardMatrix.getBoardMatrix();
   String v1     = "x";
   String v2     = "x";
   float limMin  = 0  ;
   float limMed  = 7  ;
   float limMax  = 16 ;
-  int margenX   = 450;
-  int margenY   = 50 ;
+  int margenX   = 10;
+  int margenY   = 10 ;
   int espaciado = 10 ;
   int tamanio   = 20 ;
   
@@ -33,8 +34,8 @@ public class Board extends PApplet{
   //==================================================================================================================================================================//
 
   //CONSTRUCTOR
-  void MatrizAdyacencia(ArrayList<String> board) {
-    this.g = g;
+  public Board (PApplet sketch) {
+      this.sketch = sketch;
   }
   
   //==================================================================================================================================================================//
@@ -87,9 +88,9 @@ public class Board extends PApplet{
 
   //CAMBIA LAS POSICIONES
   
-  void arrastrado(){
-    int distX = mouseX - pmouseX ;
-    int distY = mouseY - pmouseY;
+  public void arrastrado(){
+    int distX = sketch.mouseX - sketch.pmouseX ;
+    int distY = sketch.mouseY - sketch.pmouseY;
     
     if(tilees.size() > 0){
     Tile primero = tilees.get(0);
@@ -151,8 +152,8 @@ public class Board extends PApplet{
   // GENERA LOS ELEMETOS
   void generarElementos(){
     
-    int lines = matrix.getHeight();
-    int columns = matrix.getWidth();
+    int lines = matrix.getLines();
+    int columns = matrix.getColumns();
     //float[][] mAdyacencia = g.getMatrizAdyacencias();
     int y = margenY; 
      //
@@ -165,15 +166,15 @@ public class Board extends PApplet{
           x  = x + tamanio + espaciado   ;
  
           
-          if(!matrix.getTile(j, i).isEmpty() ) {
+          if(matrix.getTile(j, i).length() > 1 ) {
             String tile =  matrix.getTile(j, i);
-            s = new Tile(x, y, tamanio, tamanio, tile.charAt(0),tile.charAt(2));
+            s = new Tile(sketch,x, y, tamanio, tamanio, tile.charAt(0),tile.charAt(2));
             tilees.add(s);
           }
           else {
             
             //System.out.println("entre");
-            s = new Tile(x, y, tamanio, tamanio, 'n','n');
+            s = new Tile(sketch,x, y, tamanio, tamanio, 'n','n');
             tilees.add(s);
             
           }

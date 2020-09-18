@@ -6,13 +6,20 @@
 package Board;
 
 import processing.core.PApplet;
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
 /**
  *
  * @author lalem
  */
-public class Tile extends PApplet{
+public class Tile{
   int x;
   int y;
+  
+  private PApplet sketch;
   
   int r;
   int g;
@@ -26,8 +33,8 @@ public class Tile extends PApplet{
   //CONSTRUCTOR
   
   //==================================================================================================================================================================//
-  Tile(int x, int y, int alto, int ancho, char color, char type){
-    
+  Tile(PApplet sketch, int x, int y, int alto, int ancho, char color, char type){
+    this.sketch = sketch;
     this.x     = x    ;
     this.y     = y    ;
     this.type  = type;
@@ -35,8 +42,8 @@ public class Tile extends PApplet{
     this.ancho = ancho;
     setColorByChar(color);
     
-    fill( r,g,b       );
-    rect(x,y,alto,ancho);
+    sketch.fill( r,g,b );
+    sketch.rect(x,y,alto,ancho);
   }
   
 
@@ -74,9 +81,12 @@ public class Tile extends PApplet{
             this.b = 26;
             break;
         default:
-            this.r = 0;
-            this.g = 0;
-            this.b = 0;
+            this.r = 255;
+            this.g = 255;
+            this.b = 255;
+            //this.r = 217;
+            //this.g = 153;
+            //this.b = 26;
     }
   }
 
@@ -85,8 +95,8 @@ public class Tile extends PApplet{
 
   void run(){
     //stem.out.println(r + g + b); 
-    fill(r,g,b         );
-    rect(x,y,alto,ancho);
+    sketch.fill(r,g,b         );
+    sketch.rect(x,y,alto,ancho);
 
   }
   
