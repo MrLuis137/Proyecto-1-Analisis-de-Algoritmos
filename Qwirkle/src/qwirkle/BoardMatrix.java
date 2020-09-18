@@ -18,6 +18,7 @@ public class BoardMatrix {
     
     private BoardMatrix(){
         matrix = new String [lines][columns];
+        fillMatrix();
     }
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
