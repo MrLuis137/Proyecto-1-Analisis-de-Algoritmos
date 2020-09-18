@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package qwirkle.board;
+package Board;
 
+import qwirkle.BoardMatrix;
 /**
  *
  * @author lalem
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 public class Board extends PApplet{
-  ArrayList<Tile> tilees = new ArrayList<Tile>();
+  ArrayList<Tile> tilees = new ArrayList<Tile>();  
 
   String[][] g;
-
+  BoardMatrix matrix = BoardMatrix.getBoardMatrix();
   String v1     = "x";
   String v2     = "x";
   float limMin  = 0  ;
@@ -26,6 +27,7 @@ public class Board extends PApplet{
   int margenY   = 50 ;
   int espaciado = 10 ;
   int tamanio   = 20 ;
+  
 
 
   //==================================================================================================================================================================//
@@ -38,7 +40,7 @@ public class Board extends PApplet{
   //==================================================================================================================================================================//
 
   // DIBUJA
-  void run() {
+  public void run() {
     //SI NO HAY NINGUNA SECCIÓN LAS GENERA
     if (tilees.isEmpty()) {  
       this.generarElementos();
@@ -46,7 +48,7 @@ public class Board extends PApplet{
     else {
       
       int x = margenX + 5;
-      //DIBUJA LAS ETIQUETAS DE LOS VERTICES EN X
+      /*DIBUJA LAS ETIQUETAS DE LOS VERTICES EN X
       for (int i =0; i < g.getNumVertices(); i++) {
       
         x= x+ tamanio +espaciado;
@@ -62,7 +64,7 @@ public class Board extends PApplet{
         fill(0);
         text(g.getVertice(i), margenX, y);
       }
-      
+      */
       //LLAMA AL DIBUJADO DE LAS SECCIONES
       for (Tile s : tilees) {
         s.run();
@@ -149,48 +151,29 @@ public class Board extends PApplet{
   // GENERA LOS ELEMETOS
   void generarElementos(){
     
-    int  numVertices      = g.size();
+    int lines = matrix.getHeight();
+    int columns = matrix.getWidth();
     //float[][] mAdyacencia = g.getMatrizAdyacencias();
     int y = margenY; 
      //
-      for (int i = 0; i < numVertices; i++) {
+      for (int i = 0; i < columns; i++) {
       // i = Y
         int x = margenX;
 
-        for (int j = 0; j < numVertices; j++) {
-          //J = x 
-          Tile s;
-          //float peso = mAdyacencia[i][j] ;          
+        for (int j = 0; j < lines; j++) { 
+          Tile s;          
           x  = x + tamanio + espaciado   ;
-          v1 = (g.getVertice(i))         ;
-          v2 = (g.getVertice(j))         ;
+ 
           
-          // SETEO DE COLORES
-          if (peso < limMin || peso > limMax) {
-            
-            s = new Tile(x, y, tamanio, tamanio, 230, 230, 230, peso,v1,v2);
+          if(!matrix.getTile(j, i).isEmpty() ) {
+            String tile =  matrix.getTile(j, i);
+            s = new Tile(x, y, tamanio, tamanio, tile.charAt(0),tile.charAt(2));
             tilees.add(s);
-            
-          } 
-          
-          else if (peso >= limMin && peso <= limMed) {
-            
-            s = new Tile(x, y, tamanio, tamanio, calcularR(peso), 255, 0, peso,v1,v2);
-            
-            tilees.add(s);
-          }
-          
-          else if (limMed < peso && peso < limMax) {
-          
-            //System.out.println(calcularG(peso));
-            s = new Tile(x, y, tamanio, tamanio, 255, calcularG(peso), 0, peso,v1,v2);
-            tilees.add(s);
-          
           }
           else {
             
             //System.out.println("entre");
-            s = new Tile(x, y, tamanio, tamanio, 230, 0, 0, peso,v1,v2);
+            s = new Tile(x, y, tamanio, tamanio, 'n','n');
             tilees.add(s);
             
           }
@@ -201,7 +184,7 @@ public class Board extends PApplet{
   
   //==================================================================================================================================================================//
   
-  //SETEA LOS LÍMITES
+  /*//SETEA LOS LÍMITES
   void setLimites(float min, float med, float max) {
     
     this.limMin = min;
@@ -230,5 +213,5 @@ public class Board extends PApplet{
     n = (n > 255)? 255 : n;
     n = (n < 0)? 0 : n;
     return n;
-  }
+  }*/
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package qwirkle.board;
+package Board;
 
 import processing.core.PApplet;
 /**
@@ -13,39 +13,71 @@ import processing.core.PApplet;
 public class Tile extends PApplet{
   int x;
   int y;
- 
+  
   int r;
   int g;
   int b;
-  
-  String  nodo1;
-  String  nodo2;
+  char  type;
   String  uno  ;
   String  dos  ;
-  float   peso ;
   int     ancho; 
   int     alto ;
-  
-  float   elpeso = 0    ;
   
   //CONSTRUCTOR
   
   //==================================================================================================================================================================//
-  Seccion(int x, int y, int alto, int ancho, int r, int g, int b, float peso, String nodo1, String nodo2){
+  Tile(int x, int y, int alto, int ancho, char color, char type){
     
     this.x     = x    ;
     this.y     = y    ;
-    this.r     = r    ;
-    this.g     = g    ;
-    this.b     = b    ;
+    this.type  = type;
     this.alto  = alto ;
-    this.peso  = peso ;    
-    this.ancho = ancho;    
-    this.nodo1 = nodo1;
-    this.nodo2 = nodo2;
+    this.ancho = ancho;
+    setColorByChar(color);
     
-    fill(r,g,b         );
+    fill( r,g,b       );
     rect(x,y,alto,ancho);
+  }
+  
+
+  
+  private void setColorByChar(char color){
+      switch(color){
+        case 'r':
+            this.r = 255;
+            this.g = 0;
+            this.b = 0;
+            break;
+        case 'g':
+            this.r = 0;
+            this.g = 255;
+            this.b = 0;
+            break;
+        case 'b':
+            this.r = 0;
+            this.g = 0;
+            this.b = 255;
+            break;
+        case 'y':
+            this.r = 237;
+            this.g = 230;
+            this.b = 28;
+            break;
+        case 'p':
+            this.r = 142;
+            this.g = 79;
+            this.b = 194;
+            break;
+        case 'o':
+            this.r = 217;
+            this.g = 153;
+            this.b = 26;
+            break;
+        default:
+            this.r = 0;
+            this.g = 0;
+            this.b = 0;
+    }
   }
 
 
