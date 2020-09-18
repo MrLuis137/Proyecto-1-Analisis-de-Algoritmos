@@ -14,12 +14,19 @@ public class BoardMatrix {
     
     
     private static BoardMatrix board = new BoardMatrix();
-    private int width = 2;
-    private int height = 2;
+    private int columns = 2;
+    private int lines = 2;
     private String[][] matrix;
     
     private BoardMatrix(){
-        matrix = new String [height][width];
+        matrix = new String [lines][columns];
+    }
+    private void fillMatrix(){
+        for(int i = 0; i > lines; i++){
+            for(int j = 0; i > columns; j++){
+                matrix[i][j] = "";
+            }
+        }
     }
     
     public static BoardMatrix getBoardMatrix(){
@@ -30,19 +37,19 @@ public class BoardMatrix {
         board = new BoardMatrix();  
     }
     
-    public void setTile(String piece, int x, int y){
-        matrix[y][x] = piece;
+    public void setTile(String piece, int line, int column){
+        matrix[line][column] = piece;
     }
     
-    public int getWidth(){
-        return width;
+    public int getLines(){
+        return columns;
     }
-    public int getHeight(){
-        return height;
+    public int getColumns(){
+        return lines;
     }
     
-    public String getTile(int x,int y){
-        return matrix[y][x]; 
+    public String getTile(int line,int column){
+        return matrix[line][column]; 
     }
     //*************************************
     //*****TO-DO Programar el resize*******
