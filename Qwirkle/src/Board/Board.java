@@ -11,12 +11,13 @@ import qwirkle.BoardMatrix;
  * @author lalem
  */
 import java.util.ArrayList;
+import java.util.Hashtable;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Board{
-  ArrayList<Tile> tilees = new ArrayList<>();  
-
-  String[][] g;
+  ArrayList<Tile> tilees = new ArrayList<>(); 
+  public Hashtable tilesIcons;
   private PApplet sketch;
   BoardMatrix matrix = BoardMatrix.getBoardMatrix();
   String v1     = "x";
@@ -26,15 +27,17 @@ public class Board{
   float limMax  = 16 ;
   int margenX   = 10;
   int margenY   = 10 ;
-  int espaciado = 10 ;
-  int tamanio   = 20 ;
+  int espaciado = 5 ;
+  int tamanio   = 46 ;
+ 
   
 
 
   //==================================================================================================================================================================//
 
   //CONSTRUCTOR
-  public Board (PApplet sketch) {
+  public Board (PApplet sketch, Hashtable tilesIcons) {
+      this.tilesIcons = tilesIcons;
       this.sketch = sketch;
   }
   
@@ -43,35 +46,21 @@ public class Board{
   // DIBUJA
   public void run() {
     //SI NO HAY NINGUNA SECCIÓN LAS GENERA
-    if (tilees.isEmpty()) {  
+    if (matrix.hasChanges() || matrix.hasChanges()) {  
       this.generarElementos();
+      matrix.setHasChanges(false);
     } 
     else {
       
       int x = margenX + 5;
-      /*DIBUJA LAS ETIQUETAS DE LOS VERTICES EN X
-      for (int i =0; i < g.getNumVertices(); i++) {
-      
-        x= x+ tamanio +espaciado;
-        fill(0);
-        text(g.getVertice(i), x, margenY - 10);
-      
-      }
-      //DIBUJA LAS ETIQUETAS DE LOS VERTICES EN Y
-      int y = margenY - 10;
-    
-      for (int i =0; i < g.getNumVertices(); i++) {
-        y= y + tamanio +espaciado;
-        fill(0);
-        text(g.getVertice(i), margenX, y);
-      }
-      */
       //LLAMA AL DIBUJADO DE LAS SECCIONES
       for (Tile s : tilees) {
         s.run();
       }
     }
   }
+  
+  
   
   //==================================================================================================================================================================//
 
@@ -168,13 +157,14 @@ public class Board{
           
           if(matrix.getTile(j, i).length() > 1 ) {
             String tile =  matrix.getTile(j, i);
-            s = new Tile(sketch,x, y, tamanio, tamanio, tile.charAt(0),tile.charAt(2));
+            //System.out.println(i + " " + j + " " + tile );
+            s = new Tile(sketch, tilesIcons,x, y, tamanio, tamanio, tile.charAt(0),tile.charAt(2));
             tilees.add(s);
           }
           else {
             
             //System.out.println("entre");
-            s = new Tile(sketch,x, y, tamanio, tamanio, 'n','n');
+            s = new Tile(sketch,tilesIcons,x, y, tamanio, tamanio, 'n','n');
             tilees.add(s);
             
           }
@@ -182,37 +172,4 @@ public class Board{
         y = y + tamanio + espaciado;
       }
   }
-  
-  //==================================================================================================================================================================//
-  
-  /*//SETEA LOS LÍMITES
-  void setLimites(float min, float med, float max) {
-    
-    this.limMin = min;
-    this.limMed = med;
-    this.limMax = max;
-    
-  }
-  
-  //==================================================================================================================================================================//
-  
-  //CALCULA EL COLOR VERDE
-  private int calcularG(float peso) {
-    float factor = limMax - limMed; 
-    int n = Math.round(((peso - limMed) * 255) / factor);
-    n = (n > 255)? 255 : n;
-    n = (n < 0)? 0 : n;
-    return 255 - n;
-  }
-  
-  //==================================================================================================================================================================//
-
-  //CALCULA EL COLOR ROJO
-  private int calcularR(float peso) {
-    float factor = limMed - limMin; 
-    int n = Math.round(((peso - limMin) * 255) / factor);
-    n = (n > 255)? 255 : n;
-    n = (n < 0)? 0 : n;
-    return n;
-  }*/
 }

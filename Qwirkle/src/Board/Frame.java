@@ -14,37 +14,16 @@ import Board.Board;
  *
  * @author lalem
  */
-public class Frame extends PApplet{
-    @Override
-    public void settings() {
-        size(640, 480);
-    }
-
-    @Override
-    public void setup() {
-        fill(120,50,240);
-    }
-
-    @Override
-    public void draw(){
-        ellipse(width/2,height/2,second(),second());
-    }
-
+public class Frame{
     
-    /*Board board = new Board();
+    PApplet applet;
     
-    @Override
-    public void settings(){
-        size(1300,730);
+    public Frame(PApplet applet){
+        this.applet =  applet;
     }
     
-    @Override
-    public void draw(){
-        clear();
-        stroke(0);
-        strokeWeight(1);
-        board.run();
-       
-        
-    }*/ 
+    public void run(){
+        applet.fill(157,191,209);
+        applet.rect(0,applet.height -90, applet.width, applet.height);
+    }
 }

@@ -5,6 +5,7 @@
  */
 package Board;
 
+import java.util.Hashtable;
 import processing.core.PApplet;
 import processing.core.*; 
 import processing.data.*; 
@@ -16,97 +17,55 @@ import processing.opengl.*;
  * @author lalem
  */
 public class Tile{
-  int x;
-  int y;
-  
-  private PApplet sketch;
-  
-  int r;
-  int g;
-  int b;
-  char  type;
-  String  uno  ;
-  String  dos  ;
-  int     ancho; 
-  int     alto ;
+
+    private PApplet sketch;
+    Hashtable icons;
+    int x;
+    int y;
+    char  type;
+    char  color;
+    int   ancho; 
+    int   alto ;
   
   //CONSTRUCTOR
   
   //==================================================================================================================================================================//
-  Tile(PApplet sketch, int x, int y, int alto, int ancho, char color, char type){
+  Tile(PApplet sketch,Hashtable icons, int x, int y, int alto, int ancho, char color, char type){
+    this.icons = icons;
     this.sketch = sketch;
     this.x     = x    ;
     this.y     = y    ;
     this.type  = type;
     this.alto  = alto ;
     this.ancho = ancho;
-    setColorByChar(color);
-    
-    sketch.fill( r,g,b );
-    sketch.rect(x,y,alto,ancho);
-  }
+    this.color = color; 
+    //run();
   
-
-  
-  private void setColorByChar(char color){
-      switch(color){
-        case 'r':
-            this.r = 255;
-            this.g = 0;
-            this.b = 0;
-            break;
-        case 'g':
-            this.r = 0;
-            this.g = 255;
-            this.b = 0;
-            break;
-        case 'b':
-            this.r = 0;
-            this.g = 0;
-            this.b = 255;
-            break;
-        case 'y':
-            this.r = 237;
-            this.g = 230;
-            this.b = 28;
-            break;
-        case 'p':
-            this.r = 142;
-            this.g = 79;
-            this.b = 194;
-            break;
-        case 'o':
-            this.r = 217;
-            this.g = 153;
-            this.b = 26;
-            break;
-        default:
-            this.r = 255;
-            this.g = 255;
-            this.b = 255;
-            //this.r = 217;
-            //this.g = 153;
-            //this.b = 26;
-    }
   }
 
 
   //==================================================================================================================================================================//
 
   void run(){
-    //stem.out.println(r + g + b); 
-    sketch.fill(r,g,b         );
-    sketch.rect(x,y,alto,ancho);
+    //stem.out.println(r + g + b);
+    if(color != 'n' && type != 'n'){
+        renderTile();
+    }
+    else{
+        sketch.fill(255);
+        sketch.rect(x,y,alto,ancho);
+    }
 
   }
   
   //==================================================================================================================================================================//
  
-// CAMBIA EL COLOR
-void cambiarColor(int r, int g, int b ){
-    this.r = r;
-    this.g = g;
-    this.b = b;
+  private void renderTile(){
+      String key = color + "-" + type;
+      //System.out.println(key);
+      PImage icon = (PImage)icons.get(key);
+      
+      sketch.image(icon, x, y);
   }
   
   //==================================================================================================================================================================//
@@ -114,6 +73,7 @@ void cambiarColor(int r, int g, int b ){
 //COMPRUEBA SI HA SIDO CLICKEADO
 void isPressed(int mX, int mY ){
     if( mX >= x && mX <= (x +ancho) && mY >= y && mY <= (y + ancho)){
+        System.out.println("Click funciona");
      //SI mensajeDatos(la clsae Datos)NO ESTÁ ACTIVO ENTONCES CAMBIA LOS DATOS Y LO ACTIVA
       /*if (!mensajeDatos.isActivo()){
         mensajeDatos.setDatos(nodo1, nodo2, peso);

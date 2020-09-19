@@ -17,20 +17,24 @@ public class BoardMatrix {
     private int columns = 20;
     private int lines = 20;
     private static String[][] matrix;
+    private boolean hasChanges = true;
     
     private BoardMatrix(){
         this.matrix = new String [lines][columns];
         fillMatrix();
-        matrix [10][12] = "r-4";
-        matrix [10][11] = "b-4";
-        matrix [11][12] = "y-4";
+        matrix [10][12] = "r-1";
+        matrix [10][11] = "b-2";
+        matrix [11][12] = "g-3";
+        matrix [13][12] = "y-4";
+        matrix [11][13] = "o-5";
+        matrix [12][12] = "p-6";
     }
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
             for(int j = 0; j < columns; j++){
                 
-                matrix[i][j] = "k";
-                System.out.println(i + " " + j + ":" + matrix[i][j] );
+                matrix[i][j] = "";
+                //System.out.println(i + " " + j + ":" + matrix[i][j] );
                 
             }
         }
@@ -49,6 +53,7 @@ public class BoardMatrix {
     
     public void setTile(String piece, int line, int column){
         matrix[line][column] = piece;
+        hasChanges = true;
     }
     
     public int getLines(){
@@ -60,6 +65,14 @@ public class BoardMatrix {
     
     public String getTile(int line,int column){
         return matrix[line][column]; 
+    }
+    
+    public boolean hasChanges(){
+        return hasChanges;
+    }
+    
+    public void setHasChanges(boolean flag){
+        hasChanges = flag;
     }
     //*************************************
     //*****TO-DO Programar el resize*******
