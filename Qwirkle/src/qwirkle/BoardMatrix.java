@@ -50,9 +50,39 @@ public class BoardMatrix {
     public String getTile(int line,int column){
         return matrix[line][column]; 
     }
-    //*************************************
-    //*****TO-DO Programar el resize*******
-    //*************************************
+    
+    
+    //Para cuando la nueva picha está en matriz[?][n-1]
+    public static String[][] aumentarDerecha(String[][] original){
+        String nueva[][] = new String[original.length][original[0].length+1];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, nueva[i], 0, original[i].length);}
+        return nueva;  
+    }
+    
+    //Para cuando la nueva picha está en matriz[n-1][?]
+    public static String[][] aumentarAbajo(String[][] original){
+        String nueva[][] = new String[original.length+1][original[0].length];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, nueva[i], 0, original[i].length);}
+        return nueva;  
+    }
+    
+    //Para cuando la nueva picha está en matriz[?][0]
+    public static String[][] aumentarIzquierda(String[][] original){
+        String nueva[][] = new String[original.length][original[0].length+1];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, nueva[i], 1, original[i].length);}
+        return nueva;  
+    }
+    
+    //Para cuando la nueva picha está en matriz[0][?]
+    public static String[][] aumentarArriba(String[][] original){
+        String nueva[][] = new String[original.length+1][original[0].length];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, nueva[i+1], 0, original[i].length);}
+        return nueva;  
+    }
     
 }
 
