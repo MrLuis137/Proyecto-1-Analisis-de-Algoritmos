@@ -14,20 +14,23 @@ public class BoardMatrix {
     
     
     private static BoardMatrix board;
-    private int columns = 20;
-    private int lines = 20;
+    private int columns = 4;
+    private int lines = 4;
     private static String[][] matrix;
     private boolean hasChanges = true;
     
     private BoardMatrix(){
         this.matrix = new String [lines][columns];
         fillMatrix();
-        matrix [10][12] = "r-1";
-        matrix [10][11] = "b-2";
-        matrix [11][12] = "g-3";
-        matrix [13][12] = "y-4";
-        matrix [11][13] = "o-5";
-        matrix [12][12] = "p-6";
+        
+        //******************SOLO PARA TESTEAR*****************
+        matrix [0][0] = "R-1";
+        matrix [1][1] = "B-2";
+        matrix [1][2] = "G-3";
+        matrix [3][2] = "Y-4";
+        matrix [1][3] = "O-5";
+        matrix [2][2] = "P-6";
+        //******************SOLO PARA TESTEAR*****************/
     }
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
@@ -57,10 +60,10 @@ public class BoardMatrix {
     }
     
     public int getLines(){
-        return columns;
+        return lines;
     }
     public int getColumns(){
-        return lines;
+        return columns;
     }
     
     public String getTile(int line,int column){

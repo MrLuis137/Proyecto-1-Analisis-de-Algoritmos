@@ -85,7 +85,7 @@ public class Board{
     Tile primero = tilees.get(0);
     Tile ultimo = tilees.get(tilees.size() - 1);
     
-    if(primero.x < 1300 - tamanio && primero.y < 730 - tamanio  && ultimo.x > 340 && ultimo.y > 0){
+    if(primero.x < 1300 - tamanio && primero.y < 730 - tamanio  && ultimo.x > 0 && ultimo.y > 0){
    
       margenX += distX;
       margenY += distY;
@@ -115,8 +115,8 @@ public class Board{
         });
     }
     
-    else if(ultimo.x <= 340){
-      int diferencia = 341 - ultimo.x;
+    else if(ultimo.x <= 0){
+      int diferencia = 2 - ultimo.x;
       tilees.forEach(tile -> {
           tile.x +=  diferencia;
         });
