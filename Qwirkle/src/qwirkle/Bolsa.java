@@ -52,4 +52,24 @@ public class Bolsa {
         }
     }
     
+    /*
+    Devuelve un arraylist con los ultimos n elementos de las fichas
+    Para agregarlos se debe usar el metodo .addAll(pop(n));
+    */
+    public static ArrayList<String> pop (int cantidad){
+        ArrayList<String> valores = new ArrayList<>();
+        //if para cuando la cantidad de fichas necesitades es mayor a la 
+        //cantidad de fichas en bolsa.
+        if(fichas.size()<cantidad){
+            cantidad=fichas.size();
+            for (int i = 0; i < cantidad; i++) {
+                valores.add(fichas.remove(fichas.size()-1));} 
+        }else{
+            for (int i = 0; i < cantidad; i++) {
+                valores.add(fichas.remove(fichas.size()-1));}
+        }
+        return valores;
+    }
+    
+    
 }
