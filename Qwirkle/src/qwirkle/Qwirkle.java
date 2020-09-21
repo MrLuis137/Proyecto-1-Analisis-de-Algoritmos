@@ -4,18 +4,107 @@
  * and open the template in the editor.
  */
 package qwirkle;
-
+import processing.core.PApplet;
+import Board.Frame;
+import Board.Board;
+import java.util.Hashtable;
+import processing.core.PImage;
 /**
  *
  * @author Jacob
  */
-public class Qwirkle {
+public class Qwirkle extends PApplet{
 
     /**
      * @param args the command line arguments
      */
+    public Hashtable tilesIcons = new Hashtable();
+    Board board = new Board(this, tilesIcons);
+    Frame frame = new Frame(this, tilesIcons);
+    boolean presionado = false;
+    
+    
+    
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        String[] appletArgs = new String[] { "qwirkle.Qwirkle" };
+        PApplet.main(appletArgs);
+        BoardMatrix matriz = BoardMatrix.getBoardMatrix();
+        //System.out.println(matriz.getTile(0, 0));
+        //******************SOLO PARA TESTEAR*****************
+        String[] ht = {"B-1","R-6","P-5","P-2","Y-3","O-4"};
+        PlayerTiles.getPlayerTiles().setHumanTiles(ht);
+        PlayerTiles.getPlayerTiles().setBactackingTiles(ht);
+        PlayerTiles.getPlayerTiles().setSmartBacktrackingTiles(ht);
+        //******************SOLO PARA TESTEAR*****************
+        
+        
     }
+    
+    //===========================================================//
+    //                  Configuracion 
+    //===========================================================//
+    @Override
+    public void settings(){
+        size(1300,730);
+    }
+    
+    @Override
+    public void setup(){
+        loadIcons();
+    }
+    
+    @Override
+    public void draw(){
+        clear();
+        stroke(0);
+        strokeWeight(1);
+        background(255);
+        //System.out.println(mouseX+ " " + mouseY);
+        board.run();
+        frame.run();
+    }
+    
+    @Override
+    public void mouseDragged() {
+        if(presionado) {
+            board.arrastrado();
+        }
+    }
+    @Override
+    public void mousePressed(){
+        presionado = true;
+    }
+    @Override
+    public void mouseReleased(){
+    presionado = false;
+    }
+    
+    @Override
+    public void mouseClicked(){
+    //SI EL MOUSE ESTA DENTRO DEL AREA DE DIBUJADO (COMPROVAR VALOR)
+    if(true){
+      
+        board.click(mouseX, mouseY);
+    }
+  }
+    //===========================================================//
+    
+    //===========================================================//
+    //                  Carga los iconos en un hash 
+    //===========================================================//
+    private void loadIcons(){
+      String[] colors = {"R", "G", "B", "P", "Y", "O"};
+      for (int i = 0; i < 6; i++){
+          for(int j = 0; j < 6; j++ ){
+              PImage image = loadImage("/assets/"+ colors[i] + "-" + (j+1) + ".png");
+              tilesIcons.put(j, image);
+              //System.out.println("key: " + colors[i] + "-" + (j+1));
+              tilesIcons.put( (colors[i] + "-" + (j+1)), image);
+          }
+      }
+  }
+    //===========================================================//
     
 }

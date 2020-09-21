@@ -11,14 +11,24 @@ package qwirkle;
 public class BoardMatrix {
     
     
-    private static BoardMatrix board = new BoardMatrix();
-    private int columns = 2;
-    private int lines = 2;
-    private String[][] matrix;
+    private static BoardMatrix board;
+    private int columns = 4;
+    private int lines = 4;
+    private static String[][] matrix;
+    private boolean hasChanges = true;
     
     private BoardMatrix(){
-        matrix = new String [lines][columns];
+        this.matrix = new String [lines][columns];
         fillMatrix();
+        
+        //******************SOLO PARA TESTEAR*****************
+        matrix [0][0] = "R-1";
+        matrix [1][1] = "B-2";
+        matrix [1][2] = "G-3";
+        matrix [3][2] = "Y-4";
+        matrix [1][3] = "O-5";
+        matrix [2][2] = "P-6";
+        //******************SOLO PARA TESTEAR*****************/
     }
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
@@ -28,29 +38,36 @@ public class BoardMatrix {
         }
     }
     
+    
+    //Obtiene un objeto boardMatrix, se hizo con 
     public static BoardMatrix getBoardMatrix(){
+        if(board == null){
+           board = new BoardMatrix();
+        }
         return board;
     }
     
+    //Limpia el  tablero
     public void clearBoard(){
         board = new BoardMatrix();  
     }
     
+    //Setea el valor de un Tile
     public void setTile(String piece, int line, int column){
         matrix[line][column] = piece;
+        hasChanges = true;
     }
     
     public int getLines(){
-        return columns;
+        return lines;
     }
     public int getColumns(){
-        return lines;
+        return columns;
     }
     
     public String getTile(int line,int column){
         return matrix[line][column]; 
     }
-    
     
     //Para cuando la nueva picha está en matriz[?][n-1]
     public static String[][] aumentarDerecha(String[][] original){
@@ -83,8 +100,19 @@ public class BoardMatrix {
             System.arraycopy(original[i], 0, nueva[i+1], 0, original[i].length);}
         return nueva;  
     }
+    //Dice si hay cambios en el tableto
+    //Es necesario mantenerlo actualizado para no estarlo revizando constantemente en la GUI
+    public boolean hasChanges(){
+        return hasChanges;
+    }
+    
+    //Setea la bandera de cambios
+    public void setHasChanges(boolean flag){
+        hasChanges = flag;
+    }
+    //*************************************
+    //*****TO-DO Programar el resize*******
+    //*************************************
     
 }
-
-
 
