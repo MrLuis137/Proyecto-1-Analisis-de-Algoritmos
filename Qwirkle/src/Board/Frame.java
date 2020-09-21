@@ -10,6 +10,7 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 import Board.Board;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import qwirkle.PlayerTiles;
 /**
@@ -40,10 +41,10 @@ public class Frame{
         int x = 26;
         applet.fill(255,255,255);
         applet.rect(x,660, 276, 46);
-        String[]tiles = pTiles.getHumanTiles();
+        ArrayList<String> tiles = pTiles.getHumanTiles();
         for(int i = 0; i < 6; i++){
-            if(tiles[i].length() == 3){
-                 String key = tiles[i];
+            if(tiles.get(i).length() == 3){
+                 String key = tiles.get(i);
                 //System.out.println(key);
                 PImage icon = (PImage)icons.get(key);
                 applet.image(icon, x +(i*46),660);
@@ -55,10 +56,10 @@ public class Frame{
         int x = 459;
         applet.fill(260,255,260);
         applet.rect(x,660, 276, 46);
-        String[]tiles = pTiles.getHumanTiles();
+        ArrayList<String> tiles = pTiles.getHumanTiles();
         for(int i = 0; i < 6; i++){
-            if(tiles[i].length() == 3){
-                 String key = tiles[i];
+            if(tiles.get(i).length() == 3){
+                 String key =tiles.get(i);
                 //System.out.println(key);
                 PImage icon = (PImage)icons.get(key);
                 applet.image(icon, x +(i*46),660);
@@ -70,10 +71,10 @@ public class Frame{
         int x = 892;
         applet.fill(260,255,260);
         applet.rect(x,660, 276, 46);
-        String[]tiles = pTiles.getHumanTiles();
+        ArrayList<String> tiles = pTiles.getHumanTiles();
         for(int i = 0; i < 6; i++){
-            if(tiles[i].length() == 3){
-                 String key = tiles[i];
+            if(tiles.get(i).length() == 3){
+                 String key = tiles.get(i);
                 //System.out.println(key);
                 PImage icon = (PImage)icons.get(key);
                 applet.image(icon, x +(i*46),660);

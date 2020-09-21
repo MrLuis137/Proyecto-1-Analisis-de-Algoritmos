@@ -7,6 +7,7 @@ package qwirkle;
 import processing.core.PApplet;
 import Board.Frame;
 import Board.Board;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import processing.core.PImage;
 /**
@@ -26,18 +27,14 @@ public class Qwirkle extends PApplet{
     
     
     
+    
     public static void main(String[] args) {
-        
+        Bolsa.llenarBolsa();
         String[] appletArgs = new String[] { "qwirkle.Qwirkle" };
         PApplet.main(appletArgs);
         BoardMatrix matriz = BoardMatrix.getBoardMatrix();
         //System.out.println(matriz.getTile(0, 0));
-        //******************SOLO PARA TESTEAR*****************
-        String[] ht = {"B-1","R-6","P-5","P-2","Y-3","O-4"};
-        PlayerTiles.getPlayerTiles().setHumanTiles(ht);
-        PlayerTiles.getPlayerTiles().setBactackingTiles(ht);
-        PlayerTiles.getPlayerTiles().setSmartBacktrackingTiles(ht);
-        //******************SOLO PARA TESTEAR*****************
+        
         
         
     }
