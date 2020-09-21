@@ -144,7 +144,7 @@ public class Board{
     int lines = matrix.getLines();
     int columns = matrix.getColumns();
     
-      System.out.println(lines + " " + columns);
+      //System.out.println(lines + " " + columns);
     //float[][] mAdyacencia = g.getMatrizAdyacencias();
     int y = margenY; 
      //

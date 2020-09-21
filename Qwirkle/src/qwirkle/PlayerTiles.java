@@ -26,7 +26,7 @@ public class PlayerTiles {
         humanTiles = Bolsa.pop(6);
         bacrackingTiles = Bolsa.pop(6);
         smartBactrakingTiles = Bolsa.pop(6);
-        System.out.println(humanTiles.toString());
+        //System.out.println(humanTiles.toString());
      
     }
     
@@ -37,9 +37,6 @@ public class PlayerTiles {
         return playerTiles;
     }
     
-    public static PlayerTiles getPlayerTiles(Bolsa bolsa){
-        return playerTiles;
-    }
     //===========================================================//
     
     //===========================================================//
@@ -54,6 +51,19 @@ public class PlayerTiles {
     //===========================================================//
     public void setHumanTiles(ArrayList<String> tiles){
         humanTiles = tiles;
+    }
+    
+    public String popHumanTile(int position){
+        String tile = humanTiles.get(position);
+        String toRemove = "";
+        for(String t: humanTiles){
+            if(t == tile){
+              toRemove = t;
+            }
+        }
+        humanTiles.remove(toRemove);
+        humanTiles.add("n");
+        return tile;
     }
     
     //===========================================================//

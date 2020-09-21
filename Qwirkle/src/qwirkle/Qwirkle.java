@@ -10,6 +10,7 @@ import Board.Board;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import processing.core.PImage;
+import Board.Tools;
 /**
  *
  * @author Jacob
@@ -22,6 +23,8 @@ public class Qwirkle extends PApplet{
     public Hashtable tilesIcons = new Hashtable();
     Board board = new Board(this, tilesIcons);
     Frame frame = new Frame(this, tilesIcons);
+    static Tools tools;
+    
     boolean presionado = false;
     
     
@@ -33,6 +36,8 @@ public class Qwirkle extends PApplet{
         String[] appletArgs = new String[] { "qwirkle.Qwirkle" };
         PApplet.main(appletArgs);
         BoardMatrix matriz = BoardMatrix.getBoardMatrix();
+        tools = new Tools();
+        tools.setVisible(true);
         //System.out.println(matriz.getTile(0, 0));
         
         

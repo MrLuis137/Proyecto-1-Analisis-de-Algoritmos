@@ -44,6 +44,7 @@ public class Frame{
         applet.fill(255,255,255);
         applet.rect(x,660, 276, 46);
         ArrayList<String> tiles = pTiles.getHumanTiles();
+        //System.out.println(tiles.toString());
         for(int i = 0; i < 6; i++){
             if(tiles.get(i).length() == 3){
                  String key = tiles.get(i);
