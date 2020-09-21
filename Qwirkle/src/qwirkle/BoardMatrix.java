@@ -38,6 +38,8 @@ public class BoardMatrix {
         }
     }
     
+    
+    //Obtiene un objeto boardMatrix, se hizo con 
     public static BoardMatrix getBoardMatrix(){
         if(board == null){
            board = new BoardMatrix();
@@ -45,10 +47,12 @@ public class BoardMatrix {
         return board;
     }
     
+    //Limpia el  tablero
     public void clearBoard(){
         board = new BoardMatrix();  
     }
     
+    //Setea el valor de un Tile
     public void setTile(String piece, int line, int column){
         matrix[line][column] = piece;
         hasChanges = true;
@@ -65,10 +69,13 @@ public class BoardMatrix {
         return matrix[line][column]; 
     }
     
+    //Dice si hay cambios en el tableto
+    //Es necesario mantenerlo actualizado para no estarlo revizando constantemente en la GUI
     public boolean hasChanges(){
         return hasChanges;
     }
     
+    //Setea la bandera de cambios
     public void setHasChanges(boolean flag){
         hasChanges = flag;
     }

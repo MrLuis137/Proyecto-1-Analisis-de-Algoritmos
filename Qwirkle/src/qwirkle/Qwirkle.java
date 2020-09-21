@@ -7,7 +7,6 @@ package qwirkle;
 import processing.core.PApplet;
 import Board.Frame;
 import Board.Board;
-import Board.Tools;
 import java.util.Hashtable;
 import processing.core.PImage;
 /**
@@ -40,7 +39,12 @@ public class Qwirkle extends PApplet{
         PlayerTiles.getPlayerTiles().setSmartBacktrackingTiles(ht);
         //******************SOLO PARA TESTEAR*****************
         
+        
     }
+    
+    //===========================================================//
+    //                  Configuracion 
+    //===========================================================//
     @Override
     public void settings(){
         size(1300,730);
@@ -85,7 +89,11 @@ public class Qwirkle extends PApplet{
         board.click(mouseX, mouseY);
     }
   }
+    //===========================================================//
     
+    //===========================================================//
+    //                  Carga los iconos en un hash 
+    //===========================================================//
     private void loadIcons(){
       String[] colors = {"R", "G", "B", "P", "Y", "O"};
       for (int i = 0; i < 6; i++){
@@ -97,5 +105,6 @@ public class Qwirkle extends PApplet{
           }
       }
   }
+    //===========================================================//
     
 }
