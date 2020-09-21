@@ -39,6 +39,8 @@ public class Frame{
      
     public void playerTiles(){
         int x = 26;
+        applet.fill(0);
+        applet.text("Fichas del jugador", x, 655); 
         applet.fill(255,255,255);
         applet.rect(x,660, 276, 46);
         ArrayList<String> tiles = pTiles.getHumanTiles();
@@ -54,9 +56,11 @@ public class Frame{
     
     public void manoBacktracking(){
         int x = 459;
+        applet.fill(0);
+        applet.text("Fichas del Back Tracking", x, 655); 
         applet.fill(260,255,260);
         applet.rect(x,660, 276, 46);
-        ArrayList<String> tiles = pTiles.getHumanTiles();
+        ArrayList<String> tiles = pTiles.getBactackingTiles();
         for(int i = 0; i < 6; i++){
             if(tiles.get(i).length() == 3){
                  String key =tiles.get(i);
@@ -69,9 +73,11 @@ public class Frame{
     
     public void manoBacktrackingMejorado(){
         int x = 892;
+        applet.fill(0);
+        applet.text("Fichas del Back Tracking mejorado", x, 655); 
         applet.fill(260,255,260);
         applet.rect(x,660, 276, 46);
-        ArrayList<String> tiles = pTiles.getHumanTiles();
+        ArrayList<String> tiles = pTiles.getSmartBacktrackingTiles();
         for(int i = 0; i < 6; i++){
             if(tiles.get(i).length() == 3){
                  String key = tiles.get(i);
