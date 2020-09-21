@@ -69,7 +69,7 @@ public class BoardMatrix {
         return matrix[line][column]; 
     }
     
-    //Para cuando la nueva picha está en matriz[?][n-1]
+    //Para cuando la nueva ficha está en matriz[?][n-1]
     public static String[][] aumentarDerecha(String[][] original){
         String nueva[][] = new String[original.length][original[0].length+1];
         for (int i = 0; i < original.length; i++) {
@@ -77,7 +77,7 @@ public class BoardMatrix {
         return nueva;  
     }
     
-    //Para cuando la nueva picha está en matriz[n-1][?]
+    //Para cuando la nueva ficha está en matriz[n-1][?]
     public static String[][] aumentarAbajo(String[][] original){
         String nueva[][] = new String[original.length+1][original[0].length];
         for (int i = 0; i < original.length; i++) {
@@ -85,7 +85,7 @@ public class BoardMatrix {
         return nueva;  
     }
     
-    //Para cuando la nueva picha está en matriz[?][0]
+    //Para cuando la nueva ficha está en matriz[?][0]
     public static String[][] aumentarIzquierda(String[][] original){
         String nueva[][] = new String[original.length][original[0].length+1];
         for (int i = 0; i < original.length; i++) {
@@ -93,7 +93,7 @@ public class BoardMatrix {
         return nueva;  
     }
     
-    //Para cuando la nueva picha está en matriz[0][?]
+    //Para cuando la nueva ficha está en matriz[0][?]
     public static String[][] aumentarArriba(String[][] original){
         String nueva[][] = new String[original.length+1][original[0].length];
         for (int i = 0; i < original.length; i++) {
