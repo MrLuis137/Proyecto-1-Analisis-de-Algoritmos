@@ -15,7 +15,7 @@ public class Bolsa {
     public static ArrayList<String> fichas = new ArrayList<>();
     
     // B=Azul, P=Morado, R=Rojo, O=Naranja, Y=Amarillo, G=Verde.
-    // 1=Circulo, 2=Estella(8), 3=Rombo, 4=Estrella(4), 5=Cuadrado, 6=Flor.
+    // 1=Flor, 2=Estella(8), 3=Cuadrado, 4=Rombo, 5=Estrella(4), 6=Circulo.
     public static String[] combi = {"B-1", "B-2", "B-3", "B-4", "B-5", "B-6",
                                     "P-1", "P-2", "P-3", "P-4", "P-5", "P-6",
                                     "R-1", "R-2", "R-3", "R-4", "R-5", "R-6",
