@@ -20,13 +20,11 @@ public class Board{
   public Hashtable tilesIcons;
   private PApplet sketch;
   BoardMatrix matrix = BoardMatrix.getBoardMatrix();
-  String v1     = "x";
-  String v2     = "x";
   float limMin  = 0  ;
   float limMed  = 7  ;
   float limMax  = 16 ;
   int margenX   = 10;
-  int margenY   = 10 ;
+  int margenY   = 20 ;
   int espaciado = 5 ;
   int tamanio   = 46 ;
  
@@ -51,28 +49,30 @@ public class Board{
       matrix.setHasChanges(false);
     } 
     else {
-      
       int x = margenX + 5;
+      //DIBUJA LAS ETIQUETAS EN LAS COLUMNAS
+      for (int i =0; i < matrix.getColumns(); i++) {
+      
+        x= x+ tamanio +espaciado;
+        sketch.fill(0);
+        sketch.text(i, x, margenY - 10);
+      
+      }
+      //DIBUJA LAS ETIQUETAS EN LAS FILAS
+      int y = margenY - 10;
+    
+      for (int i =0; i < matrix.getLines(); i++) {
+        y= y + tamanio +espaciado;
+        sketch.fill(0);
+        sketch.text(i, margenX, y);
+      }
       //LLAMA AL DIBUJADO DE LAS SECCIONES
       for (Tile s : tilees) {
         s.run();
       }
     }
   }
-  
-  
-  
-  //==================================================================================================================================================================//
-
-  //COMPRUEBA EL CLICK
-  public void click(int mX, int mY) {
-    
-    //PARA CADA SECCION COMPRUEBA
-    for (Tile s : tilees) {
-      s.isPressed(mX, mY);
-    }
-  }
-  
+   
    //==================================================================================================================================================================//
 
   //CAMBIA LAS POSICIONES

@@ -33,7 +33,7 @@ public class BoardMatrix {
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
             for(int j = 0; j < columns; j++){
-                matrix[i][j] = "";
+                matrix[i][j] = "n";
             }
         }
     }

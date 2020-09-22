@@ -66,6 +66,35 @@ public class PlayerTiles {
         return tile;
     }
     
+    
+    public String popBactrackingTiles(int position){
+        String tile = humanTiles.get(position);
+        String toRemove = "";
+        for(String t: humanTiles){
+            if(t == tile){
+              toRemove = t;
+            }
+        }
+        humanTiles.remove(toRemove);
+        humanTiles.add("n");
+        return tile;
+    }
+    
+    
+    public String popSmartBactrackingTiles(int position){
+        String tile = humanTiles.get(position);
+        String toRemove = "";
+        for(String t: humanTiles){
+            if(t == tile){
+              toRemove = t;
+            }
+        }
+        humanTiles.remove(toRemove);
+        humanTiles.add("n");
+        return tile;
+    }
+    
+    
     //===========================================================//
     //          Obtiene las fichas del bactracking simple
     //===========================================================//

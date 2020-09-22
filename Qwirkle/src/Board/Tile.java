@@ -64,28 +64,10 @@ public class Tile{
       String key = color + "-" + type;
       //System.out.println(key);
       PImage icon = (PImage)icons.get(key);
-      
       sketch.image(icon, x, y);
   }
   
   //==================================================================================================================================================================//
-  
-//COMPRUEBA SI HA SIDO CLICKEADO
-void isPressed(int mX, int mY ){
-    if( mX >= x && mX <= (x +ancho) && mY >= y && mY <= (y + ancho)){
-        System.out.println("Click funciona");
-     //SI mensajeDatos(la clsae Datos)NO ESTÁ ACTIVO ENTONCES CAMBIA LOS DATOS Y LO ACTIVA
-      /*if (!mensajeDatos.isActivo()){
-        mensajeDatos.setDatos(nodo1, nodo2, peso);
-        mensajeDatos.setActivo(true);
-      */}
-      
-      //SI ESTA ACTIVO, LO DESACTIVA;
-      else{
-        //mensajeDatos.setActivo(false);
-      }
-    }
-  //}
   
   //==================================================================================================================================================================// 
 }

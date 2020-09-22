@@ -88,7 +88,7 @@ public class Qwirkle extends PApplet{
     //SI EL MOUSE ESTA DENTRO DEL AREA DE DIBUJADO (COMPROVAR VALOR)
     if(true){
       
-        board.click(mouseX, mouseY);
+        //board.click(mouseX, mouseY);
     }
   }
     //===========================================================//
