@@ -33,6 +33,7 @@ public class BoardMatrix {
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
             for(int j = 0; j < columns; j++){
+                if(matrix[i][j] == null)
                 matrix[i][j] = "n";
             }
         }
@@ -54,7 +55,18 @@ public class BoardMatrix {
     
     //Setea el valor de un Tile
     public void setTile(String piece, int line, int column){
+        this.print();
+        /****aumento Lineas*******/
+        if(line == 0){ aumentarArriba(); }
+        else if(line == lines -1){ aumentarAbajo(); }
+        
+        /****aumento Columnas*******/
+        if(column == 0){ aumentarIzquierda(); }
+        else if(column == columns -1){
+            System.out.println("si funco");
+            aumentarDerecha();}
         matrix[line][column] = piece;
+        this.print();
         hasChanges = true;
     }
     
@@ -75,6 +87,8 @@ public class BoardMatrix {
         for (int i = 0; i < matrix.length; i++) {
             System.arraycopy(matrix[i], 0, nueva[i], 0, matrix[i].length);}
         matrix=nueva;
+        columns++;
+        fillMatrix();
     }
     
     //Para cuando la nueva ficha está en matriz[n-1][?]
@@ -83,6 +97,8 @@ public class BoardMatrix {
         for (int i = 0; i < matrix.length; i++) {
             System.arraycopy(matrix[i], 0, nueva[i], 0, matrix[i].length);}
         matrix=nueva;
+        lines++;
+        fillMatrix();
     }
     
     //Para cuando la nueva ficha está en matriz[?][0]
@@ -91,6 +107,8 @@ public class BoardMatrix {
         for (int i = 0; i < matrix.length; i++) {
             System.arraycopy(matrix[i], 0, nueva[i], 1, matrix[i].length);}
         matrix=nueva;
+        columns++;
+        fillMatrix();
     }
     
     //Para cuando la nueva ficha está en matriz[0][?]
@@ -99,6 +117,8 @@ public class BoardMatrix {
         for (int i = 0; i < matrix.length; i++) {
             System.arraycopy(matrix[i], 0, nueva[i+1], 0, matrix[i].length);}
         matrix=nueva;
+        lines++;
+        fillMatrix();
     }
     
     //Dice si hay cambios en el tableto
@@ -111,9 +131,16 @@ public class BoardMatrix {
     public void setHasChanges(boolean flag){
         hasChanges = flag;
     }
-    //*************************************
-    //*****TO-DO Programar el resize*******
-    //*************************************
     
+    
+    public void print(){
+        for (int i = 0; i < lines; i++){
+            for(int j = 0; j < columns; j++){
+                System.out.print("[" + matrix[i][j] + "] ");
+            }
+            System.out.println("");
+        }
+        
+    }
 }
 
