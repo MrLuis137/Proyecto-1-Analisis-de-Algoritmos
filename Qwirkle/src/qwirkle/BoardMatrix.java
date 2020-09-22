@@ -55,7 +55,7 @@ public class BoardMatrix {
     
     //Setea el valor de un Tile
     public void setTile(String piece, int line, int column){
-        this.print();
+        matrix[line][column] = piece;
         /****aumento Lineas*******/
         if(line == 0){ aumentarArriba(); }
         else if(line == lines -1){ aumentarAbajo(); }
@@ -65,8 +65,6 @@ public class BoardMatrix {
         else if(column == columns -1){
             System.out.println("si funco");
             aumentarDerecha();}
-        matrix[line][column] = piece;
-        this.print();
         hasChanges = true;
     }
     
