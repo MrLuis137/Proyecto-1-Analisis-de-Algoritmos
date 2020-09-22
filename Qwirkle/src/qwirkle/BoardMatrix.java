@@ -22,7 +22,7 @@ public class BoardMatrix {
         fillMatrix();
         
         //******************SOLO PARA TESTEAR*****************
-        matrix [0][0] = "R-1";
+        /*matrix [0][0] = "R-1";
         matrix [0][1] = "B-2";
         matrix [1][2] = "G-3";
         matrix [2][3] = "Y-4";
