@@ -65,6 +65,12 @@ public class BoardMatrix {
         else if(column == columns -1){
             System.out.println("si funco");
             aumentarDerecha();}
+        
+        /****delimitado del tablero*******/
+        if( matrix[line +1 ][column].equals("n") ){ matrix[line + 1][column] = "t"; }
+        if( matrix[line][column +1].equals("n") ){ matrix[line][column + 1] = "t"; }
+        if( matrix[line - 1][column].equals("n") ){ matrix[line - 1][column] = "t"; }
+        if( matrix[line][column - 1].equals("n") ){ matrix[line][column - 1] = "t"; }
         hasChanges = true;
     }
     
