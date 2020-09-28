@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import processing.core.PImage;
 import Board.Tools;
+import backtracking.Insertion;
 /**
  *
  * @author Jacob
@@ -38,7 +39,8 @@ public class Qwirkle extends PApplet{
         BoardMatrix matriz = BoardMatrix.getBoardMatrix();
         tools = new Tools();
         tools.setVisible(true);
-        //System.out.println(matriz.getTile(0, 0));
+        //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
+        //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
         
         
         

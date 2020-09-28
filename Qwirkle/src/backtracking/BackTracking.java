@@ -29,20 +29,33 @@ public class BackTracking {
         if(hand.isEmpty()){
             return;
         }
+        //Dado que BoardMatrix utiliza el patron Singleton, se hace una copia de la estructura original para ser restaurada al finalizar
+        // No se utiliza el arreglo "crudo" por la necesidad de
+        String[][] matrixCopy = matrix.getStructure();
+        int lines = matrix.getLines();
+        int columns = matrix.getColumns();
         switch(action){
+            
+            //Caso 1, recorre toda la matriz buscando una posición donde pueda insertar
             case 1:
                 for(int i = 0; i < matrix.getLines(); i++){
                     for(int j = 0; j < matrix.getColumns(); j++){
+                        //Si en la posición i,j hay una "t", reviza si es posible insertar la ficha.
                         if(matrix.getTile(i, j).equals("t")){
-                            String tileUp = matrix.getTile(i - 1, j);
-                            String tileDown = matrix.getTile(i + 1, j);
-                            String tileLeft = matrix.getTile(i, j - 1);
-                            String tileRight = matrix.getTile(i, j + 1);
+                            for(String tile: hand){
                                 
-                            hand.forEach(tile -> {
-                                int tUpVal;
-                                int tDownVal;
-                            });
+                                int l = j;
+                                boolean color = false;
+                                boolean shape = false;
+                                while(matrix.getTile(l, j) != null && matrix.getTile(l, j).length() > 1){
+                                    color = tile.contains(matrix.getTile(l, j).subSequence(0,1)) && tile.contains(matrix.getTile(l, j).subSequence(0,1));
+                                    shape = tile.contains(matrix.getTile(l, j).subSequence(2,3)) && tile.contains(matrix.getTile(l, j).subSequence(2,3));
+                                }
+                                if((color && !shape) || (!color && shape)){
+                                    //BoardMatrix matrixCopy = matrix
+                                }
+                            } 
+                            
                         }
                     }
                 }

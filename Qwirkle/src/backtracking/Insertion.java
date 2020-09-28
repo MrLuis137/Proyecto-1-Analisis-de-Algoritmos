@@ -14,7 +14,10 @@ public class Insertion {
     public int line;
     public int column;
     
-    Insertion(String tile, int line, int column){
+public Insertion(String tile, int line, int column){
+        this.tile = tile;
+        this.line = line;
+        this.column = column;
     }
     
 }
