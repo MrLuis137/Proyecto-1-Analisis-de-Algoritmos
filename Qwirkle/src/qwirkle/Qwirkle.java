@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import processing.core.PImage;
 import Board.Tools;
+import backtracking.BackTracking;
 import backtracking.Insertion;
 /**
  *
@@ -39,6 +40,15 @@ public class Qwirkle extends PApplet{
         BoardMatrix matriz = BoardMatrix.getBoardMatrix();
         tools = new Tools();
         tools.setVisible(true);
+        BackTracking b = new BackTracking();
+        ArrayList<Insertion> i = new ArrayList<Insertion>();
+        i.add(new Insertion("P-5", 4, 7));
+        i.add(new Insertion("Y-5", 4, 6));
+        i.add(new Insertion("G-5", 5, 6));
+        i.add(new Insertion("B-5", 6, 6));
+        i.add(new Insertion("G-5", 6, 5));
+        matriz.setTiles(i);
+        b.correrBackTracking();
         //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
         //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
         

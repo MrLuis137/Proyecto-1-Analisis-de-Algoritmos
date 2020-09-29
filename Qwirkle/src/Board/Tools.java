@@ -6,6 +6,7 @@
 package Board;
 
 
+import backtracking.BackTracking;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -100,6 +101,11 @@ public class Tools extends javax.swing.JFrame {
         error.setText("Introduzca valores correctos");
 
         jButton2.setText("Terminar jugada");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,8 +130,7 @@ public class Tools extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(tileSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41)
-                                .addComponent(icon)))
-                        .addGap(46, 46, 46))
+                                .addComponent(icon))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jButton1)
@@ -189,6 +194,10 @@ public class Tools extends javax.swing.JFrame {
         setTileIcon();
 // TODO add your handling code here:
     }//GEN-LAST:event_tileSelectorActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new BackTracking().correrBackTracking();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

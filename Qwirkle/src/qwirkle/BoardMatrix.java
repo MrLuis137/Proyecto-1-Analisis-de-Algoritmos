@@ -51,14 +51,27 @@ public class BoardMatrix {
         return board;
     }
     
-    public String[][]getStructure(){
-        return matrix;
+    public String[][]getCopyOfStructure(){
+        String[][] copy = new String[lines][columns];
+        for(int i = 0; i < lines; i++){
+            for(int j = 0; j< columns; j++){
+                copy[i][j] = matrix[i][j].intern();
+            }
+        }
+        return copy;
     }
     
     public void setStructure(String[][] pMatrix, int pLines, int pColumns){
-        matrix  = pMatrix;
+        String[][] copy = new String[pLines][pColumns];
+        for(int i = 0; i < pLines; i++){
+            for(int j = 0; j< pColumns; j++){
+                copy[i][j] = pMatrix[i][j].intern();
+            }
+        }
+        matrix  = copy;
         lines = pLines;
         columns = pColumns;
+        hasChanges = true;
     }
     
     //Limpia el  tablero
@@ -100,7 +113,8 @@ public class BoardMatrix {
     
     //Setea el valor de un Tile sin hacer crecer la matriz !!!USAR CON CUIDADO, PUEDE CONDUCIR A UN INDEX OUT OF BOUNDS!!!
     public void setTileWithoutGrow(String piece, int line, int column){
-     matrix[line][column] = piece;       
+        //System.out.println(line + " " + column);
+        matrix[line][column] = piece;       
         /****delimitado del tablero*******/
         if( matrix[line +1 ][column].equals("n") ){ matrix[line + 1][column] = "t"; }
         if( matrix[line][column +1].equals("n") ){ matrix[line][column + 1] = "t"; }
