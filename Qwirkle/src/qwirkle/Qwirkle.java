@@ -40,7 +40,6 @@ public class Qwirkle extends PApplet{
         BoardMatrix matriz = BoardMatrix.getBoardMatrix();
         tools = new Tools();
         tools.setVisible(true);
-        BackTracking b = new BackTracking();
         ArrayList<Insertion> i = new ArrayList<Insertion>();
         //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
         i.add(new Insertion("P-5", 4, 7));                                              //
@@ -53,7 +52,7 @@ public class Qwirkle extends PApplet{
         //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
         
         matriz.setTiles(i);
-        b.correrBackTracking();
+        BackTracking.correrBackTracking();
         //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
         //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
         
