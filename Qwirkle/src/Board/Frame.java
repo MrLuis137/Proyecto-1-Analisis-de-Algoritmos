@@ -45,7 +45,7 @@ public class Frame{
         applet.rect(x,660, 276, 46);
         ArrayList<String> tiles = pTiles.getHumanTiles();
         //System.out.println(tiles.toString());
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).length() == 3){
                  String key = tiles.get(i);
                 //System.out.println(key);
@@ -62,7 +62,7 @@ public class Frame{
         applet.fill(260,255,260);
         applet.rect(x,660, 276, 46);
         ArrayList<String> tiles = pTiles.getBactackingTiles();
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).length() == 3){
                  String key =tiles.get(i);
                 //System.out.println(key);
@@ -79,7 +79,7 @@ public class Frame{
         applet.fill(260,255,260);
         applet.rect(x,660, 276, 46);
         ArrayList<String> tiles = pTiles.getSmartBacktrackingTiles();
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).length() == 3){
                  String key = tiles.get(i);
                 //System.out.println(key);

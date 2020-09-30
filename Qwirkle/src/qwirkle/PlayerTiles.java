@@ -23,8 +23,21 @@ public class PlayerTiles {
     }
     
     public void fillPlayersTiles(){
+        ///****SOLO PARA TESTEO
+        ArrayList<String> t = new ArrayList<String>();
+        //t.add("O-5");
+        //t.add("Y-5");
+        //t.add("Y-3");
+        //t.add("Y-4");
+        //t.add("Y-5");
+        //t.add("R-5");
+        bacrackingTiles = t;
+        ///****SOLO PARA TESTEO
+        
+        
         humanTiles = Bolsa.pop(6);
         bacrackingTiles = Bolsa.pop(6);
+        
         smartBactrakingTiles = Bolsa.pop(6);
         //System.out.println(humanTiles.toString());
      
