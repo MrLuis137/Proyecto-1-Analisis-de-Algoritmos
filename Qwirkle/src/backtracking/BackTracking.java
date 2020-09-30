@@ -28,6 +28,153 @@ public class BackTracking {
         backTracking( tiles.getBactackingTiles(), 0, 0, 1,false, new ArrayList<Insertion>());
         
     }
+    //______________METODOS PARA CONTAR LOS PUNTOS______________
+    public static ArrayList<Integer> puntos = new ArrayList<>();
+    
+    public static boolean esFila(Insertion ficha1, Insertion ficha2){
+        return ficha1.line==ficha2.line;     
+    }
+        
+    public static void contarPuntos(BoardMatrix matrix,ArrayList<Insertion> insertList){
+        //Variables que llevan los puntos de la fila/columna principal
+        //y sus filas/columnas secundarias
+        int principal=1,secundario=1;
+        int ayuda,fila,colum;
+        String celda;
+        
+        if(insertList.size()==1){//Si solo es una ficha.
+            fila=insertList.get(0).line;
+            colum=insertList.get(0).column;
+            celda=matrix.getTile(fila, colum+1);
+            if(!"n".equals(celda)&&!"t".equals(celda)){//Ver si tiene vecino derecha
+                for (int i = colum+1; i < matrix.getColumns(); i++){
+                    celda=matrix.getTile(fila, i);
+                    if(!"n".equals(celda)&&!"t".equals(celda))principal++;
+                    else break;}
+                
+            }else{celda=matrix.getTile(fila, colum-1);
+                if(!"n".equals(celda)&&!"t".equals(celda)){//Ver si tiene vecino izq
+                    for (int i = colum-1; i > -1; i--){
+                        celda=matrix.getTile(fila, i);
+                        if(!"n".equals(celda)&&!"t".equals(celda))principal++;
+                        else break;}      
+                }
+            }           
+            if( principal==6)principal+=6;
+            celda=matrix.getTile(fila+1, colum);
+            if(!"n".equals(celda)&&!"t".equals(celda)){//Ver si tiene vecino abajo
+                for (int i = fila+1; i < matrix.getLines(); i++){
+                    celda=matrix.getTile(i, colum);
+                    if(!"n".equals(celda)&&!"t".equals(celda))secundario++;
+                    else break;} 
+            }else{celda=matrix.getTile(fila-1, colum);
+                if(!"n".equals(celda)&&!"t".equals(celda)){//Ver si tiene vecino arriba
+                    for (int i = fila-1; i >-1; i--){
+                        celda=matrix.getTile(i, colum);
+                        if(!"n".equals(celda)&&!"t".equals(celda))secundario++;
+                        else break;}
+                }
+            }if(secundario==6)secundario+=6;
+            
+            if(principal==1)puntos.add(secundario);
+            else if(secundario==1)puntos.add(principal);
+            else puntos.add(principal+secundario);
+            
+        }else{//-----------------------------------Para cuando hay varias fichas
+              //----------------------------------------------------------------
+            secundario=0;
+            principal=insertList.size();
+            fila=insertList.get(0).line;
+            colum=insertList.get(0).column;        
+            if(esFila(insertList.get(0),insertList.get(1))){//~~~~~~~~~~~~~~~~~~Cuando es una fila
+                System.out.println("Es fila");
+                //=============================Contar los puntos de toda la fila
+                //==============================================================
+                celda=matrix.getTile(fila, colum+1);  
+                if(!"n".equals(celda)&&!"t".equals(celda)){//Cuando las fichas en la matriz están derecha
+                    for (int i = colum+1; i < matrix.getColumns(); i++){
+                        celda=matrix.getTile(fila, i);
+                        if(!"n".equals(celda)&&!"t".equals(celda))principal++;
+                        else break;}     
+                }celda=matrix.getTile(fila, colum-1);
+                if(!"n".equals(celda)&&!"t".equals(celda)){//Cuando las fichas en la matriz están izq
+                    for (int i = colum-1; i > -1; i--){
+                        celda=matrix.getTile(fila, i);
+                        if(!"n".equals(celda)&&!"t".equals(celda))principal++;
+                        else break;
+                        //System.out.println("puntos de principal "+principal);
+                    }   
+                }if(principal==6)principal+=6;
+                //***********************Contar los puntos de todas las columnas
+                //**************************************************************
+                for(Insertion ficha:insertList ){
+                    ayuda=1;
+                    fila=ficha.line;
+                    colum=ficha.column;
+                    celda=matrix.getTile(fila+1, colum);
+                    if(!"n".equals(celda)&&!"t".equals(celda)){//+++++++++++++++Ver si tiene vecino abajo
+                        for (int i = fila+1; i < matrix.getLines(); i++){
+                            celda=matrix.getTile(i, colum);
+                            if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
+                            else break;}
+                    }else{celda=matrix.getTile(fila-1, colum);
+                        if(!"n".equals(celda)&&!"t".equals(celda)){//+++++++++++Ver si tiene vecino arriba
+                            for (int i = fila-1; i >-1; i--){
+                                celda=matrix.getTile(i, colum);
+                                if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
+                                else break;}
+                        }
+                    }
+                    if(ayuda==6)ayuda+=6;
+                    if(ayuda!=1)secundario+=ayuda;
+                    //System.out.println("puntos de secundario "+secundario);
+                }  
+            }else{//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Cuando es una columna           
+                //==========================Contar los puntos de toda la columna
+                //==============================================================
+                System.out.println("Es columna");
+                celda=matrix.getTile(fila+1, colum);  
+                if(!"n".equals(celda)&&!"t".equals(celda)){//___________________Cuando las fichas en la matriz están arriba 
+                    for (int i = fila+1; i < matrix.getLines(); i++){
+                        celda=matrix.getTile(i, colum);
+                        if(!"n".equals(celda)&&!"t".equals(celda))principal++;
+                        else break;}  
+                }celda=matrix.getTile(fila-1, colum);
+                if(!"n".equals(celda)&&!"t".equals(celda)){//___________________Cuando las fichas en la matriz están abajo
+                    for (int i = fila-1; i >-1; i--){
+                        celda=matrix.getTile(i, colum);
+                        if(!"n".equals(celda)&&!"t".equals(celda))principal++;
+                        else break;}   
+                }if(principal==6)principal+=6;
+                //*********************Contar los puntos de las filas adyacentes
+                //**************************************************************
+                for(Insertion ficha:insertList ){
+                    ayuda=1;
+                    fila=ficha.line;
+                    colum=ficha.column;
+                    celda=matrix.getTile(fila, colum+1);
+                    if(!"n".equals(celda)&&!"t".equals(celda)){//_______________Ver si tiene vecino derecha
+                        for (int i = colum+1; i < matrix.getColumns(); i++){
+                            celda=matrix.getTile(fila, i);
+                            if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
+                            else break;}  
+                    }else{celda=matrix.getTile(fila, colum-1);
+                        if(!"n".equals(celda)&&!"t".equals(celda)){//___________Ver si tiene vecino izq
+                            for (int i = colum-1; i > -1; i--){
+                                celda=matrix.getTile(fila, i);
+                                if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
+                                else break;}      
+                        }
+                    }
+                    if(ayuda==6)ayuda+=6;
+                    if(ayuda!=1)secundario+=ayuda;
+                }
+            }
+            if(secundario==1)puntos.add(principal);
+            else puntos.add(principal+secundario);
+        }     
+    }
+    
     
     private void backTracking(ArrayList<String> hand, int line, int column, int action,boolean lookShape, ArrayList<Insertion> insertList){
         System.out.println(action);
