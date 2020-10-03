@@ -17,24 +17,44 @@ public class BackTracking {
     private static boolean color = false;
     private static boolean shape = false;
     private static ArrayList posibilities = new ArrayList();
+    public static ArrayList<Integer> puntos = new ArrayList<>();
     
     public static void correrBackTracking(){
         backTracking( tiles.getBactackingTiles(), 0, 0, 1,false, new ArrayList<Insertion>());
-        int higestScoreIndex = 0;
+        //
         System.out.println(posibilities.size());
         for(Object o : posibilities){
             ArrayList<Insertion> posibilitie = (ArrayList<Insertion>) o;
-            //**LA IDEA ES IR COMPARANDO Y GUARDAR EL MAYOR PUNTAJE**//
-            //AÚN FALTA RETORNAR LOS PUNTOS TOTALES//
-            System.out.println(posibilitie.size());
             contarPuntos(matrix, posibilitie);
         }
+        int higestScoreIndex = 0, higScore = 0;
+        for(int i = 0; i < puntos.size();i++){
+            if(puntos.get(i) > higScore){
+                higScore = puntos.get(i);
+                higestScoreIndex = i;
+            }
+        }
+        if(posibilities.size() > 0){
+            System.out.println(posibilities.size());
+            System.out.println(puntos.size());
+            System.out.println(higestScoreIndex);
+            ArrayList<Insertion> movement = (ArrayList<Insertion>) posibilities.get(higestScoreIndex);
+           matrix.setTiles(movement);
+           for(Insertion ins : movement){
+               tiles.popBactrackingTiles(ins.tile);
+           }
+        }
+        posibilities.clear();
+        
+        
     }
     
     //=======================================================================================================================//
     //                      INICIO DE LAS FUNCIONES DEL BACK TRACKING
     //                      CONTAR PUNTOS A PARTIR DE LINEA: 298 
     //=======================================================================================================================//
+    
+   
     
     private static  void backTracking(ArrayList<String> hand, int line, int column, int action,boolean lookShape, ArrayList<Insertion> insertList){
         if(hand.isEmpty()){
@@ -146,13 +166,13 @@ public class BackTracking {
             insertList.add( new Insertion(tile,line,column));
             matrix.setTileWithoutGrow(tile, line, column);
             
-            /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
             try {                                                                            //
                 Thread.sleep(1000);                                                          //
             } catch (InterruptedException ex) {                                              //
                 Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
             }                                                                                //
-            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||/
             
             callNextIteration(hand,(action == 3)? line + 1: line -1 , column, action,shape, tile, insertList);
             posibilities.add(insertList.clone());
@@ -196,13 +216,13 @@ public class BackTracking {
             insertList.add( new Insertion(tile,line,column));
             matrix.setTileWithoutGrow(tile, line, column);
             
-           /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+           //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
             try {                                                                            //
                 Thread.sleep(1000);                                                          //
             } catch (InterruptedException ex) {                                              //
                 Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
             }                                                                                //
-            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||/
             
             callNextIteration(hand, line , (action == 2)? column+1:column-1, action,shape, tile, insertList);
             posibilities.add(insertList.clone());
@@ -295,7 +315,6 @@ public class BackTracking {
     
     
     //______________METODOS PARA CONTAR LOS PUNTOS______________
-    public static ArrayList<Integer> puntos = new ArrayList<>();
     
     public static boolean esFila(Insertion ficha1, Insertion ficha2){
         return ficha1.line==ficha2.line;     

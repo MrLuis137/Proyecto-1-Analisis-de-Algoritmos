@@ -81,28 +81,21 @@ public class PlayerTiles {
     
     
     public String popBactrackingTiles(int position){
-        String tile = humanTiles.get(position);
-        String toRemove = "";
-        for(String t: humanTiles){
-            if(t == tile){
-              toRemove = t;
-            }
-        }
-        humanTiles.remove(toRemove);
-        humanTiles.add("n");
+        String tile = bacrackingTiles.get(position);
+        humanTiles.remove(tile);
+        //humanTiles.add("n");
+        return tile;
+    }
+    public String popBactrackingTiles(String tile){
+        bacrackingTiles.remove(tile);
+        //bacrackingTiles.add("n");
         return tile;
     }
     
     
     public String popSmartBactrackingTiles(int position){
-        String tile = humanTiles.get(position);
-        String toRemove = "";
-        for(String t: humanTiles){
-            if(t == tile){
-              toRemove = t;
-            }
-        }
-        humanTiles.remove(toRemove);
+        String tile = smartBactrakingTiles.get(position);
+        humanTiles.remove(tile);
         humanTiles.add("n");
         return tile;
     }

@@ -25,6 +25,11 @@ public class Tools extends javax.swing.JFrame {
 
     PlayerTiles pTiles = PlayerTiles.getPlayerTiles();
     BoardMatrix boardMatrix = BoardMatrix.getBoardMatrix();
+    int player = 1;
+    int puntosHumano = 0;
+    int puntosBackTracking = 0;
+    int puntosBackTrackingInteligente = 0;
+    
     public Tools() {
         initComponents();
         error.setVisible(false);
@@ -75,6 +80,14 @@ public class Tools extends javax.swing.JFrame {
         error = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         icon = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        puntosH = new javax.swing.JLabel();
+        PuntosBT = new javax.swing.JLabel();
+        puntosBTI = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,6 +120,28 @@ public class Tools extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Turno:");
+
+        jLabel5.setText("Humano:");
+
+        jLabel6.setText("BT:");
+
+        jLabel7.setText("BT Inteligente:");
+
+        puntosH.setText("0");
+
+        PuntosBT.setText("0");
+
+        puntosBTI.setText("0");
+
+        jButton3.setText("Eliminar Ficha");
+        jButton3.setActionCommand("Eliminar Ficha");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,14 +167,32 @@ public class Tools extends javax.swing.JFrame {
                                 .addGap(41, 41, 41)
                                 .addComponent(icon))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton1)
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(error)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(error))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4))
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(puntosBTI)
+                                    .addComponent(PuntosBT)
+                                    .addComponent(puntosH)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                                .addComponent(jButton3)))))
+                .addGap(44, 44, 44))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,8 +215,24 @@ public class Tools extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(312, Short.MAX_VALUE))
+                    .addComponent(jButton3))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(puntosH))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(PuntosBT))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(puntosBTI))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
@@ -199,19 +268,42 @@ public class Tools extends javax.swing.JFrame {
         new BackTracking().correrBackTracking();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        error.setVisible(false);
+        try {
+            int line = Integer.parseInt(tFilas.getText());
+            int column = Integer.parseInt(tColumnas.getText());
+            if(line < boardMatrix.getLines() && column < boardMatrix.getColumns()){
+                boardMatrix.deleteTile(line, column);
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            error.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel PuntosBT;
     private javax.swing.JLabel error;
     private javax.swing.JLabel icon;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel puntosBTI;
+    private javax.swing.JLabel puntosH;
     private javax.swing.JTextField tColumnas;
     private javax.swing.JTextField tFilas;
     private javax.swing.JComboBox<String> tileSelector;

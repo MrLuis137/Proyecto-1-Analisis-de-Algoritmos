@@ -154,6 +154,11 @@ public class BoardMatrix {
         fillMatrix();
     }
     
+    public void deleteTile(int line, int column){
+        matrix[line][column] = "n";
+        hasChanges = true;
+    }
+    
     public int getLines(){
         return lines;
     }
