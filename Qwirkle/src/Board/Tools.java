@@ -85,9 +85,10 @@ public class Tools extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         puntosH = new javax.swing.JLabel();
-        PuntosBT = new javax.swing.JLabel();
+        puntosBT = new javax.swing.JLabel();
         puntosBTI = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        playerName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,17 +131,18 @@ public class Tools extends javax.swing.JFrame {
 
         puntosH.setText("0");
 
-        PuntosBT.setText("0");
+        puntosBT.setText("0");
 
         puntosBTI.setText("0");
 
         jButton3.setText("Eliminar Ficha");
-        jButton3.setActionCommand("Eliminar Ficha");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        playerName.setText("Human");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,11 +181,13 @@ public class Tools extends javax.swing.JFrame {
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel4))
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(puntosBTI)
-                                    .addComponent(PuntosBT)
-                                    .addComponent(puntosH)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(puntosBTI)
+                                        .addComponent(puntosBT)
+                                        .addComponent(puntosH))
+                                    .addComponent(playerName)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
@@ -219,7 +223,9 @@ public class Tools extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(40, 40, 40)
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(playerName))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -227,7 +233,7 @@ public class Tools extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(PuntosBT))
+                    .addComponent(puntosBT))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -265,7 +271,24 @@ public class Tools extends javax.swing.JFrame {
     }//GEN-LAST:event_tileSelectorActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new BackTracking().correrBackTracking();
+        switch (player) {
+            case 0:
+                playerName.setText("Human");
+                player = 1;
+                pTiles.refillPlayerTiles();
+                break;
+            case 1:
+                playerName.setText("BT");
+                player = 0;
+                puntosBackTracking += BackTracking.correrBackTracking();
+                puntosBT.setText(String.valueOf(puntosBackTracking));
+                break;
+            /*case 2:
+                playerName.setText("BTI");
+                player = 0;
+                //Aquí va la llamada al back tracking inteligente*/
+        }
+        updateTileSelector();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -289,7 +312,6 @@ public class Tools extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel PuntosBT;
     private javax.swing.JLabel error;
     private javax.swing.JLabel icon;
     private javax.swing.JButton jButton1;
@@ -302,6 +324,8 @@ public class Tools extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel playerName;
+    private javax.swing.JLabel puntosBT;
     private javax.swing.JLabel puntosBTI;
     private javax.swing.JLabel puntosH;
     private javax.swing.JTextField tColumnas;

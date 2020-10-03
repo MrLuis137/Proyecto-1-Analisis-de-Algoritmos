@@ -37,7 +37,6 @@ public class Qwirkle extends PApplet{
         Bolsa.llenarBolsa();
         String[] appletArgs = new String[] { "qwirkle.Qwirkle" };
         PApplet.main(appletArgs);
-        BoardMatrix matriz = BoardMatrix.getBoardMatrix();
         tools = new Tools();
         tools.setVisible(true);
         ArrayList<Insertion> i = new ArrayList<Insertion>();
@@ -51,13 +50,6 @@ public class Qwirkle extends PApplet{
         i.add(new Insertion("G-5", 6, 5));                                              //
         matriz.setTiles(i);                                                             //
         //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||*/
-        
-        
-        BackTracking.correrBackTracking();
-        //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
-        //System.out.println(matriz.getTile(0, 0).subSequence(2, 3));
-        
-        
         
     }
     
@@ -84,7 +76,7 @@ public class Qwirkle extends PApplet{
         board.run();
         frame.run();
     }
-    
+    //*********FUNCIONES QUE PERMITEN MOVER LA MATRIZ*********
     @Override
     public void mouseDragged() {
         if(presionado) {
@@ -99,15 +91,8 @@ public class Qwirkle extends PApplet{
     public void mouseReleased(){
     presionado = false;
     }
+    //*********FUNCIONES QUE PERMITEN MOVER LA MATRIZ*********
     
-    @Override
-    public void mouseClicked(){
-    //SI EL MOUSE ESTA DENTRO DEL AREA DE DIBUJADO (COMPROVAR VALOR)
-    if(true){
-      
-        //board.click(mouseX, mouseY);
-    }
-  }
     //===========================================================//
     
     //===========================================================//

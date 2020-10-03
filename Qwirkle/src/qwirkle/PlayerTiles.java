@@ -22,7 +22,7 @@ public class PlayerTiles {
         fillPlayersTiles();
     }
     
-    public void fillPlayersTiles(){
+    private void fillPlayersTiles(){
         ///****SOLO PARA TESTEO
         ArrayList<String> t = new ArrayList<String>();
         //t.add("O-5");
@@ -68,15 +68,24 @@ public class PlayerTiles {
     
     public String popHumanTile(int position){
         String tile = humanTiles.get(position);
-        String toRemove = "";
-        for(String t: humanTiles){
-            if(t == tile){
-              toRemove = t;
-            }
-        }
-        humanTiles.remove(toRemove);
-        humanTiles.add("n");
+        humanTiles.remove(tile);
         return tile;
+    }
+    
+    public void refillPlayerTiles(){
+        int human = 6 - humanTiles.size();
+        int backTracking = 6 - bacrackingTiles.size();
+        int SmartbackTracking = 6 - smartBactrakingTiles.size();
+        System.out.println(humanTiles.size());
+        for(String tile : Bolsa.pop(human)){
+            humanTiles.add(tile);
+        }
+        for(String tile : Bolsa.pop(backTracking)){
+            bacrackingTiles.add(tile);
+        }
+        for(String tile : Bolsa.pop(SmartbackTracking)){
+            smartBactrakingTiles.add(tile);
+        }
     }
     
     
@@ -96,7 +105,7 @@ public class PlayerTiles {
     public String popSmartBactrackingTiles(int position){
         String tile = smartBactrakingTiles.get(position);
         humanTiles.remove(tile);
-        humanTiles.add("n");
+        //humanTiles.add("n");
         return tile;
     }
     
