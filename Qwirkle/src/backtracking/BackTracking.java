@@ -17,7 +17,9 @@ public class BackTracking {
     private static boolean color = false;
     private static boolean shape = false;
     private static ArrayList posibilities = new ArrayList();
+    
     public static ArrayList<Integer> puntos = new ArrayList<>();
+    public static ArrayList<Integer> qwirkles = new ArrayList<>();
     
     public static int correrBackTracking(){
         backTracking( tiles.getBactackingTiles(), 0, 0, 1,false, new ArrayList<Insertion>());
@@ -312,6 +314,7 @@ public class BackTracking {
         //y sus filas/columnas secundarias
         int principal=1,secundario=1;
         int ayuda,fila,colum;
+        int qwirklesL=0;
         String celda;
         
         if(insertList.size()==1){//Si solo es una ficha.
@@ -333,6 +336,8 @@ public class BackTracking {
                 }
             }           
             if( principal==6)principal+=6;
+            if( principal==5)qwirklesL++;
+            
             celda=matrix.getTile(fila+1, colum);
             if(!"n".equals(celda)&&!"t".equals(celda)){//Ver si tiene vecino abajo
                 for (int i = fila+1; i < matrix.getLines(); i++){
@@ -347,7 +352,9 @@ public class BackTracking {
                         else break;}
                 }
             }if(secundario==6)secundario+=6;
+            if( secundario==5)qwirklesL++;
             
+            qwirkles.add(qwirklesL);
             if(principal==1)puntos.add(secundario);
             else if(secundario==1)puntos.add(principal);
             else puntos.add(principal+secundario);
@@ -377,6 +384,7 @@ public class BackTracking {
                         //System.out.println("puntos de principal "+principal);
                     }   
                 }if(principal==6)principal+=6;
+                if( principal==5)qwirklesL++;
                 //***********************Contar los puntos de todas las columnas
                 //**************************************************************
                 for(Insertion ficha:insertList ){
@@ -398,7 +406,9 @@ public class BackTracking {
                         }
                     }
                     if(ayuda==6)ayuda+=6;
+                    if( ayuda==5)qwirklesL++;
                     if(ayuda!=1)secundario+=ayuda;
+                    
                     //System.out.println("puntos de secundario "+secundario);
                 }  
             }else{//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Cuando es una columna           
@@ -418,6 +428,7 @@ public class BackTracking {
                         if(!"n".equals(celda)&&!"t".equals(celda))principal++;
                         else break;}   
                 }if(principal==6)principal+=6;
+                if( principal==5)qwirklesL++;
                 //*********************Contar los puntos de las filas adyacentes
                 //**************************************************************
                 for(Insertion ficha:insertList ){
@@ -439,9 +450,11 @@ public class BackTracking {
                         }
                     }
                     if(ayuda==6)ayuda+=6;
+                    if( ayuda==5)qwirklesL++;
                     if(ayuda!=1)secundario+=ayuda;
                 }
             }
+            qwirkles.add(qwirklesL);
             if(secundario==1)puntos.add(principal);
             else puntos.add(principal+secundario);
         }     
