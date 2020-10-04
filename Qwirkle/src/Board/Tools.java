@@ -280,7 +280,11 @@ public class Tools extends javax.swing.JFrame {
             case 1:
                 playerName.setText("BT");
                 player = 0;
+                long start = System.nanoTime();
                 puntosBackTracking += BackTracking.correrBackTracking();
+                long end = System.nanoTime();
+                long tiempo = ((end - start));
+                System.out.println(tiempo +" ns");
                 puntosBT.setText(String.valueOf(puntosBackTracking));
                 break;
             /*case 2:

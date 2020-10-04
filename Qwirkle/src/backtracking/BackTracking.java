@@ -29,7 +29,6 @@ public class BackTracking {
         }
         int higestScoreIndex = 0, highScore = 0;
         for(int i = 0; i < puntos.size();i++){
-            //System.out.println(puntos.get(i));
             if(puntos.get(i) > highScore){
                 highScore = puntos.get(i);
                 higestScoreIndex = i;
@@ -37,9 +36,6 @@ public class BackTracking {
             }
         }
         if(posibilities.size() > 0){
-            //System.out.println(posibilities.size());
-            //System.out.println(puntos.size());
-            //System.out.println(higestScoreIndex);
             ArrayList<Insertion> movement = (ArrayList<Insertion>) posibilities.get(higestScoreIndex);
            matrix.setTiles(movement);
            for(Insertion ins : movement){
@@ -55,11 +51,10 @@ public class BackTracking {
     
     //=======================================================================================================================//
     //                      INICIO DE LAS FUNCIONES DEL BACK TRACKING
-    //                      CONTAR PUNTOS A PARTIR DE LINEA: 298 
+    //                      CONTAR PUNTOS A PARTIR DE LINEA: 229 
     //=======================================================================================================================//
     
    
-    
     private static  void backTracking(ArrayList<String> hand, int line, int column, int action,boolean lookShape, ArrayList<Insertion> insertList){
         if(hand.isEmpty()){
             return;
@@ -74,171 +69,159 @@ public class BackTracking {
                     for(int j = 0; j < matrix.getColumns(); j++){
                         //Si en la posición i,j hay una "t", reviza si es posible insertar la ficha.
                         if(matrix.getTile(i, j).equals("t") && isAValidPosition(i,j)){
-                            //Para cada ficha en la mano, intenta insertar
-                            for(String tile: hand){
-                                //comprueba si es posible insertar la ficha
-                                if(!isAValidInsertion(i, j, tile)){continue;}
-                                int l = i;
-                                //Vertical hacia arriba
-                                verticalInsertion(tile, hand,i, j, insertList, lookShape, -3);
-                                //Restaura la estructura de la matriz
-                                matrix.setStructure(matrixCopy, lines, columns); 
-                                
-                                //vertical hacia abajo
-                                verticalInsertion(tile, hand,i, j, insertList, lookShape, 3);
-                                matrix.setStructure(matrixCopy, lines, columns); 
-                               
-                                //INSERCIÓN HORIZONTAL DERECHA
-                                horizontalInsertion(tile, hand,i, j, insertList, lookShape, 2);
-                                matrix.setStructure(matrixCopy, lines, columns); 
+                            
+                            //Vertical hacia arriba
+                            verticalInsertion( hand,i, j, insertList, lookShape, -3);
+                            
+                            //vertical hacia abajo
+                            verticalInsertion( hand,i, j, insertList, lookShape, 3);
 
-                                //INSERCIÓN HORIZONTAL IZQUIERDA
-                                horizontalInsertion(tile, hand,i, j, insertList, lookShape, -2);
-                                matrix.setStructure(matrixCopy, lines, columns); 
+                            //INSERCIÓN HORIZONTAL DERECHA
+                            horizontalInsertion( hand,i, j, insertList, lookShape, 2);
 
-                            }//For each tile in hand
+                            //INSERCIÓN HORIZONTAL IZQUIERDA
+                            horizontalInsertion(hand,i, j, insertList, lookShape, -2);
                             
                         }//If "t"
                     }//For j
                 }//For i
             }
-            //action: 2 = insertar hacia la derecha, -2 = insetrar a la izquierda. 
-            //El signo representa la operación necesaria para mover el indice
-            if(action == 2 || action == -2){
-                if(isAValidPosition(line,column)){
-                        for(String tile: hand){
-                            if(isAValidInsertion(line, column, tile)){
-                                horizontalInsertion(tile, hand, line, column, insertList, lookShape, action);
-                                matrix.setStructure(matrixCopy, lines, columns); 
-                            }
-                        }
-                    }
-                }
-            //action: 3 = insertar hacia abajo, -3 = insetrar a la arriba.
-            if(action == 3 || action == -3){
-                if(isAValidPosition(line,column)){
-                            for(String tile: hand){
-                                if(isAValidInsertion(line, column, tile)){
-                                    verticalInsertion(tile, hand, line, column, insertList, lookShape, action);
-                                    matrix.setStructure(matrixCopy, lines, columns);
-                                }
-                            }
-                }
-            }
-        //Switch
     }//end of function
     
-    private static void verticalInsertion( String tile, ArrayList<String> hand, int line, int column,
+    private static void verticalInsertion( ArrayList<String> hand, int line, int column,
                 ArrayList<Insertion> insertList, boolean lookShape, int action ){
-        //Se asegura que las banderas esten en un valor neutro
-        color = false; shape = false; 
-        //comprueba las fichas hacia abajo
-        if(action == -3){
-            for(int l = line+1; l <= line+7; l++){
-                String tempTile = matrix.getTile(l, column);
-               if(tempTile != null && tempTile.length() == 3){
-                   //Si la ficha a insertar y la ficha temporal son iguales, se retorna sin insertar. 
-                   if(tempTile.equals(tile)) {return;}
-                       //Si no se está insertando por forma, se revisa el color
-                       if(!lookShape){
-                       color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
-                       }
-                       //Si la lista de inserciones esta vacía, se ignora la bandera lookShpape,
-                       //Eso sucede en caso de que sea la primera ficha a insertar.
-                       if(lookShape || insertList.size() == 0){
-                       shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
-                       }
-               }else{l= line+7;}
-           }
+        if(hand.isEmpty()){
+            return;
         }
-        else{
-            for(int l = line-1; l > line-7; l--){
-                String tempTile = matrix.getTile(l, column);
-               if(tempTile != null && tempTile.length() == 3){
-                   if(tempTile.equals(tile)){return;}
-                       if(!lookShape){
-                       color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
+        //Dado que BoardMatrix utiliza el patron Singleton, se hace una copia de la estructura original para ser restaurada al finalizar
+        String[][] matrixCopy = matrix.getCopyOfStructure();
+        int lines = matrix.getLines();
+        int columns = matrix.getColumns();
+        if(isAValidPosition(line,column)){
+            for(String tile: hand){
+                if(isAValidInsertion(line, column, tile)){
+                    //horizontalInsertion(tile, hand, line, column, insertList, lookShape, action);
+                    //Se asegura que las banderas esten en un valor neutro
+                    color = false; shape = false; 
+                    //comprueba las fichas hacia abajo
+                    if(action == -3){
+                        for(int l = line+1; l <= line+7; l++){
+                            String tempTile = matrix.getTile(l, column);
+                           if(tempTile != null && tempTile.length() == 3){
+                               //Si la ficha a insertar y la ficha temporal son iguales, se retorna sin insertar. 
+                               if(tempTile.equals(tile)) {return;}
+                                   //Si no se está insertando por forma, se revisa el color
+                                   if(!lookShape){
+                                   color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
+                                   }
+                                   //Si la lista de inserciones esta vacía, se ignora la bandera lookShpape,
+                                   //Eso sucede en caso de que sea la primera ficha a insertar.
+                                   if(lookShape || insertList.size() == 0){
+                                   shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
+                                   }
+                           }else{l= line+7;}
                        }
-                       if(lookShape || insertList.size() == 0){
-                       shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
-                       }
-               }else{l= line-7;}
-           }
-        }
-        //Vertical hacia arriba
-        if((color && !shape) || (!color && shape) ){
-            insertList.add( new Insertion(tile,line,column));
-            matrix.setTileWithoutGrow(tile, line, column);
-            
-            /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
-            try {                                                                            //
-                Thread.sleep(1000);                                                          //
-            } catch (InterruptedException ex) {                                              //
-                Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
-            }                                                                                //
-            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
-            
-            callNextIteration(hand,(action == 3)? line + 1: line -1 , column, action,shape, tile, insertList);
-            posibilities.add(insertList.clone());
-            insertList.remove(insertList.size()-1);
-        }
-        
-    }
-    
-    private static void horizontalInsertion(String tile,ArrayList<String> hand, int line,int column,ArrayList<Insertion> insertList, boolean lookShape,int action){
-            //INSERCIÓN HORIZONTAL DERECHA
-        int c;
-        color = false; shape = false; 
-        if(action == 2){
-            for(c = column-1; c >= column-7; c--){
-                String tempTile = matrix.getTile(line, c);
-                if(tempTile != null && tempTile.length() == 3){
-                    if(tempTile.equals(tile)){return;}
-                    if(!lookShape){
-                    color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
                     }
-                    if(lookShape || insertList.size() == 0){
-                    shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
+                    else{
+                        for(int l = line-1; l > line-7; l--){
+                            String tempTile = matrix.getTile(l, column);
+                           if(tempTile != null && tempTile.length() == 3){
+                               if(tempTile.equals(tile)){return;}
+                                   if(!lookShape){
+                                   color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
+                                   }
+                                   if(lookShape || insertList.size() == 0){
+                                   shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
+                                   }
+                           }else{l= line-7;}
+                       }
                     }
-                }else{c= column-7;}
-            }
-        }else{
-            for(c = column+1; c <= column+7 ; c++){
-                String tempTile = matrix.getTile(line, c);
-                if(tempTile != null && tempTile.length() == 3){
-                    if(tempTile.equals(tile)){return;}
-                    if(!lookShape){
-                    color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
-                    } else{ color= false; }
-                    if(lookShape || insertList.size() == 0){
-                    shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
-                    } else{ shape = false; }
-                }else{c= column+7;}
-            }
-        }
-        if((color && !shape) || (!color && shape)){
-            insertList.add( new Insertion(tile,line,column));
-            matrix.setTileWithoutGrow(tile, line, column);
-            
-           /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
-            try {                                                                            //
-                Thread.sleep(1000);                                                          //
-            } catch (InterruptedException ex) {                                              //
-                Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
-            }                                                                                //
-            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
-            
-            callNextIteration(hand, line , (action == 2)? column+1:column-1, action,shape, tile, insertList);
-            posibilities.add(insertList.clone());
-            insertList.remove(insertList.size()-1);
-        }
+                    //Vertical hacia arriba
+                    if((color && !shape) || (!color && shape) ){
+                        insertList.add( new Insertion(tile,line,column));
+                        matrix.setTileWithoutGrow(tile, line, column);
 
+                        /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+                        try {                                                                            //
+                            Thread.sleep(1000);                                                          //
+                        } catch (InterruptedException ex) {                                              //
+                            Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
+                        }                                                                                //
+                        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+                        ArrayList<String> subHand = (ArrayList<String>)hand.clone();
+                        subHand.remove(tile);
+                        verticalInsertion(subHand, (action == 3)? line + 1: line -1, column, insertList, shape, action);
+                        posibilities.add(insertList.clone());
+                        matrix.setStructure(matrixCopy, lines, columns); 
+                        insertList.remove(insertList.size()-1);
+                    }
+                }// if validInsertion
+            }// for tile in hand
+        }//if validPosition
     }
     
-    private static void callNextIteration(ArrayList<String> hand,int i,int j, int action, boolean lookShape, String tile, ArrayList<Insertion> insertList){
-        ArrayList<String> subHand = (ArrayList<String>)hand.clone();
-        subHand.remove(tile);
-        backTracking((subHand), i, j,action,lookShape,insertList);
+    private static void horizontalInsertion(ArrayList<String> hand, int line,int column,ArrayList<Insertion> insertList, boolean lookShape,int action){
+            //INSERCIÓN HORIZONTAL DERECHA
+        if(hand.isEmpty()){
+            return;
+        }
+        //Dado que BoardMatrix utiliza el patron Singleton, se hace una copia de la estructura original para ser restaurada al finalizar
+        String[][] matrixCopy = matrix.getCopyOfStructure();
+        int lines = matrix.getLines();
+        int columns = matrix.getColumns();
+        if(isAValidPosition(line,column)){
+                for(String tile: hand){
+                    if(isAValidInsertion(line, column, tile)){
+                        int c;
+                        color = false; shape = false; 
+                        if(action == 2){
+                            for(c = column-1; c >= column-7; c--){
+                                String tempTile = matrix.getTile(line, c);
+                                if(tempTile != null && tempTile.length() == 3){
+                                    if(tempTile.equals(tile)){return;}
+                                    if(!lookShape){
+                                    color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
+                                    }
+                                    if(lookShape || insertList.size() == 0){
+                                    shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
+                                    }
+                                }else{c= column-7;}
+                            }
+                        }else{
+                            for(c = column+1; c <= column+7 ; c++){
+                                String tempTile = matrix.getTile(line, c);
+                                if(tempTile != null && tempTile.length() == 3){
+                                    if(tempTile.equals(tile)){return;}
+                                    if(!lookShape){
+                                    color = tile.contains(tempTile.subSequence(0,1)) && tile.contains(tempTile.subSequence(0,1));
+                                    } else{ color= false; }
+                                    if(lookShape || insertList.size() == 0){
+                                    shape = tile.contains(tempTile.subSequence(2,3)) && tile.contains(tempTile.subSequence(2,3));
+                                    } else{ shape = false; }
+                                }else{c= column+7;}
+                            }
+                        }
+                        if((color && !shape) || (!color && shape)){ //Si todas las fichas en la columna tienen misma forma o color
+                            insertList.add( new Insertion(tile,line,column));
+                            matrix.setTileWithoutGrow(tile, line, column);
+
+                           /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+                            try {                                                                            //
+                                Thread.sleep(1000);                                                          //
+                            } catch (InterruptedException ex) {                                              //
+                                Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
+                            }                                                                                //
+                            //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+                            ArrayList<String> subHand = (ArrayList<String>)hand.clone();
+                            subHand.remove(tile);
+                            horizontalInsertion( subHand, line, (action == 2)? column+1:column-1, insertList, lookShape, action);
+                            posibilities.add(insertList.clone());
+                            insertList.remove(insertList.size()-1);
+                            matrix.setStructure(matrixCopy, lines, columns); 
+                    }
+                }//if validInsertion
+            }//for tiles in hand
+        }//If validPosition
     }
     
     //Comprueba que en el campo i, j se pueda realizar una inserción
@@ -376,7 +359,7 @@ public class BackTracking {
             fila=insertList.get(0).line;
             colum=insertList.get(0).column;        
             if(esFila(insertList.get(0),insertList.get(1))){//~~~~~~~~~~~~~~~~~~Cuando es una fila
-                System.out.println("Es fila");
+                //System.out.println("Es fila");
                 //=============================Contar los puntos de toda la fila
                 //==============================================================
                 celda=matrix.getTile(fila, colum+1);  
@@ -421,7 +404,7 @@ public class BackTracking {
             }else{//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Cuando es una columna           
                 //==========================Contar los puntos de toda la columna
                 //==============================================================
-                System.out.println("Es columna");
+                //System.out.println("Es columna");
                 celda=matrix.getTile(fila+1, colum);  
                 if(!"n".equals(celda)&&!"t".equals(celda)){//___________________Cuando las fichas en la matriz están arriba 
                     for (int i = fila+1; i < matrix.getLines(); i++){
