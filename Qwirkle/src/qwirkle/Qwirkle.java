@@ -40,6 +40,9 @@ public class Qwirkle extends PApplet{
         tools = new Tools();
         tools.setVisible(true);
         ArrayList<Insertion> i = new ArrayList<Insertion>();
+        
+        //i.add(new Insertion("P-5", 4, 7)); 
+        //BoardMatrix.getBoardMatrix().setTiles(i); 
         /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
         i.add(new Insertion("P-5", 4, 7));                                              //
         i.add(new Insertion("Y-5", 4, 6));                                              //

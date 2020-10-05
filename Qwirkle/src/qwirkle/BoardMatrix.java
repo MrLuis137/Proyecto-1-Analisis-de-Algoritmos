@@ -32,6 +32,7 @@ public class BoardMatrix {
         matrix [3][3] = "O-5";
         matrix [0][3] = "P-6";
         //******************SOLO PARA TESTEAR*****************/
+
     }
     private void fillMatrix(){
         for(int i = 0; i < lines; i++){
