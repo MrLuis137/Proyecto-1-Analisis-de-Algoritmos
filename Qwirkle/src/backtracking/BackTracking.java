@@ -41,13 +41,9 @@ public class BackTracking {
             ArrayList<Insertion> movement = (ArrayList<Insertion>) posibilities.get(higestScoreIndex);
            matrix.setTiles(movement);
            for(Insertion ins : movement){
-               
-                System.out.println(ins.line + " " + ins.column);
                tiles.popBactrackingTiles(ins.tile);
            }
         }
-        System.out.println(qwirkles.size());
-        System.out.println(puntos.size());
         posibilities.clear();
         puntos.clear();
         return highScore;
@@ -78,7 +74,7 @@ public class BackTracking {
                             for(String tile :hand){
                                 if(!isAValidInsertion(i, j, tile)){continue;}
                                 matrix.setTileWithoutGrow(tile,i, j);
-                                //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+                                //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
                                  try {                                                                            //
                                      Thread.sleep(1000);                                                          //
                                  } catch (InterruptedException ex) {                                              //
@@ -233,28 +229,10 @@ public class BackTracking {
         if(("n".equals(tileDown) || "t".equals(tileDown))){d =false;}
         if(("n".equals(tileLeft) || "t".equals(tileLeft))){l =false;}
         if(("n".equals(tileRight) || "t".equals(tileRight))){r =false;}
-        /*/(Si a existe y ficha NO coicide en forma o color con a) o ficha y a son iguales
-        if((u && !(tileUp.charAt(0) == tile.charAt(0) || tileUp.charAt(2) == tile.charAt(2))) || tile.equals(tileUp)){
-            valid = false;
-        }
-        if((d && !(tile.charAt(0) == tileDown.charAt(0) || tile.charAt(2) == tileDown.charAt(2))) || tile.equals(tileDown)){
-            valid = false;
-        }
-        if((l && !(tileLeft.charAt(0) == tile.charAt(0) || tileLeft.charAt(2) == tile.charAt(2)) || tile.equals(tileLeft))){
-            valid = false;
-        }
-        if(r&& !(tileRight.charAt(0) == tile.charAt(0) || tileRight.charAt(2) == tile.charAt(2)) || tile.equals(tileRight) ){
-            valid = false;
-        }
-        if (!valid){return false;}
-        */
-        //NUEVO CODIGO
-        //comprobar hacia abajo
         for(int li = i+1; li <= i+7; li++){
             String tempTile = matrix.getTile(li, j);
             if(tempTile != null && tempTile.length() == 3){
                //Si la ficha a insertar y la ficha temporal son iguales, se retorna sin insertar. 
-                System.out.println(tempTile.equals(tile) + " " + tile + " " + tempTile);
                 if(tempTile.equals(tile)) {return false;}
                 if(!(tempTile.charAt(0) == tile.charAt(0) || tempTile.charAt(2) == tile.charAt(2)) || tile.equals(tempTile) ){
                     return false;
