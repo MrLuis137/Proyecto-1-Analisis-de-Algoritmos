@@ -76,7 +76,6 @@ public class PlayerTiles {
         int human = 6 - humanTiles.size();
         int backTracking = 6 - bacrackingTiles.size();
         int SmartbackTracking = 6 - smartBactrakingTiles.size();
-        System.out.println(humanTiles.size());
         for(String tile : Bolsa.pop(human)){
             humanTiles.add(tile);
         }

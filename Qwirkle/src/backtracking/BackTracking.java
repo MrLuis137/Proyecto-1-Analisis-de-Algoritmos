@@ -78,7 +78,9 @@ public class BackTracking {
                 
             }
         }
+        int pts = 0;
         if(posibilities.size() > 0){
+            pts = puntos.get(higestScoreIndex);
             ArrayList<Insertion> movement = (ArrayList<Insertion>) posibilities.get(higestScoreIndex);
            matrix.setTiles(movement);
            for(Insertion ins : movement){
@@ -87,13 +89,26 @@ public class BackTracking {
         }
         posibilities.clear();
         puntos.clear();
-        return highScore;
+        return pts;
     }
         
+    private static void delay(){
+        /*************************DESCOMENTAR PARA*************************/
+        /*********************VER LAS JUGADAS DEL BT***********************/
+       
+        /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
+        try {                                                                            //
+            Thread.sleep(1000);                                                          //
+        } catch (InterruptedException ex) {                                              //
+            Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
+        }                                                                                //
+        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+    }
+    
     
     //=======================================================================================================================//
     //                      INICIO DE LAS FUNCIONES DEL BACK TRACKING
-    //                      CONTAR PUNTOS A PARTIR DE LINEA: 229 
+    //                      CONTAR PUNTOS A PARTIR DE LINEA: 320 
     //=======================================================================================================================//
     
    
@@ -114,13 +129,9 @@ public class BackTracking {
                             for(String tile :hand){
                                 if(!isAValidInsertion(i, j, tile)){continue;}
                                 matrix.setTileWithoutGrow(tile,i, j);
-                                /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
-                                 try {                                                                            //
-                                     Thread.sleep(1000);                                                          //
-                                 } catch (InterruptedException ex) {                                              //
-                                     Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
-                                 }                                                                                //
-                                 //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+                                //||||||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||
+                                                         delay();                                 //
+                                //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
                                  insertList.add( new Insertion(tile,i,j));
                                  posibilities.add(insertList.clone());
                                  ArrayList<String> subHand = (ArrayList<String>)hand.clone();
@@ -159,14 +170,9 @@ public class BackTracking {
                 if(isAValidInsertion(line, column, tile)){
                     insertList.add( new Insertion(tile,line,column));
                     matrix.setTileWithoutGrow(tile, line, column);
-
-                    /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
-                    try {                                                                            //
-                        Thread.sleep(1000);                                                          //
-                    } catch (InterruptedException ex) {                                              //
-                        Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
-                    }                                                                                //
-                    //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+                    //||||||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||
+                                             delay();                                 //
+                    //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
                     ArrayList<String> subHand = (ArrayList<String>)hand.clone();
                     subHand.remove(tile);
                     verticalInsertion(subHand, (action == 3)? line + 1: line -1, column, insertList, shape, action);
@@ -193,13 +199,9 @@ public class BackTracking {
                         insertList.add( new Insertion(tile,line,column));
                         matrix.setTileWithoutGrow(tile, line, column);
 
-                       /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
-                        try {                                                                            //
-                            Thread.sleep(1000);                                                          //
-                        } catch (InterruptedException ex) {                                              //
-                            Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
-                        }                                                                                //
-                        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+                        //||||||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||
+                                                 delay();                                 //
+                        //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
                         ArrayList<String> subHand = (ArrayList<String>)hand.clone();
                         subHand.remove(tile);
                         horizontalInsertion( subHand, line, (action == 2)? column+1:column-1, insertList, lookShape, action);
@@ -257,22 +259,14 @@ public class BackTracking {
     private static boolean isAValidInsertion(int i, int j, String tile){
         if(!(matrix.getTile(i, j).equals("n") || matrix.getTile(i, j).equals("t"))){return false;}
         boolean valid= true;
-        boolean u= true;
-        boolean d= true;
-        boolean l= true;
-        boolean r= true;
         String tileUp = matrix.getTile(i-1, j);
         String tileDown = matrix.getTile(i+1, j);
         String tileLeft = matrix.getTile(i, j-1);
         String tileRight = matrix.getTile(i, j+1);
-        if(("n".equals(tileUp) || "t".equals(tileUp))){u =false;}
-        if(("n".equals(tileDown) || "t".equals(tileDown))){d =false;}
-        if(("n".equals(tileLeft) || "t".equals(tileLeft))){l =false;}
-        if(("n".equals(tileRight) || "t".equals(tileRight))){r =false;}
         for(int li = i+1; li <= i+7; li++){
             String tempTile = matrix.getTile(li, j);
             if(tempTile != null && tempTile.length() == 3){
-               //Si la ficha a insertar y la ficha temporal son iguales, se retorna sin insertar. 
+               //Si la ficha a insertar y la ficha temporal son iguales o no coinciden en nada, se retorna sin insertar. 
                 if(tempTile.equals(tile)) {return false;}
                 if(!(tempTile.charAt(0) == tile.charAt(0) || tempTile.charAt(2) == tile.charAt(2)) || tile.equals(tempTile) ){
                     return false;
@@ -283,7 +277,7 @@ public class BackTracking {
         for(int li = i-1; li >= i-7; li--){
             String tempTile = matrix.getTile(li, j);
             if(tempTile != null && tempTile.length() == 3){
-               //Si la ficha a insertar y la ficha temporal son iguales, se retorna sin insertar. 
+               //Si la ficha a insertar y la ficha temporal son iguales o no coinciden en nada, se retorna sin insertar. 
                if(tempTile.equals(tile)) {return false;}
                 if(!(tempTile.charAt(0) == tile.charAt(0) || tempTile.charAt(2) == tile.charAt(2)) || tile.equals(tempTile) ){
                     return false;
