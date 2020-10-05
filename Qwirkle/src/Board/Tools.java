@@ -8,6 +8,7 @@ package Board;
 
 import backtracking.BackTracking;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class Tools extends javax.swing.JFrame {
     }
     
     private void setTileIcon(){
-        String route = "./assets/"+tileSelector.getSelectedItem()+ ".png";
+        String route = "./assets/" + tileSelector.getSelectedItem()+ ".png";
         BufferedImage image ;
         try {                
           image = ImageIO.read(new File(route));
@@ -81,16 +82,22 @@ public class Tools extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         icon = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        puntosH = new javax.swing.JLabel();
         puntosBT = new javax.swing.JLabel();
         puntosBTI = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         playerName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
+            }
+        });
 
         jButton1.setText("Insertar Ficha");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -123,13 +130,9 @@ public class Tools extends javax.swing.JFrame {
 
         jLabel4.setText("Turno:");
 
-        jLabel5.setText("Humano:");
-
         jLabel6.setText("BT:");
 
         jLabel7.setText("BT Inteligente:");
-
-        puntosH.setText("0");
 
         puntosBT.setText("0");
 
@@ -177,7 +180,6 @@ public class Tools extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel4))
@@ -185,8 +187,7 @@ public class Tools extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(puntosBTI)
-                                        .addComponent(puntosBT)
-                                        .addComponent(puntosH))
+                                        .addComponent(puntosBT))
                                     .addComponent(playerName)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
@@ -228,17 +229,13 @@ public class Tools extends javax.swing.JFrame {
                     .addComponent(playerName))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(puntosH))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(puntosBT))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(puntosBTI))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         pack();
@@ -262,7 +259,34 @@ public class Tools extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
+    
+    private void nextPlayer(){
+        switch (player) {
+            case 0:
+                updateTileSelector();
+                playerName.setText("Human");
+                player = 1;
+                pTiles.refillPlayerTiles();
+                break;
+            case 1:
+                playerName.setText("BT");
+                player = 2;
+                long start = System.nanoTime();
+                puntosBackTracking += BackTracking.correrBackTracking();
+                
+                long end = System.nanoTime();
+                long tiempo = ((end - start));
+                System.out.println(tiempo +" ns");
+                puntosBT.setText(String.valueOf(puntosBackTracking));
+                break;
+            case 2:
+                playerName.setText("BTI");
+                player = 0;
+                puntosBackTrackingInteligente += BackTracking.correrBackTrackingInteligente();
+                puntosBTI.setText(String.valueOf(puntosBackTrackingInteligente));
+                break;
+        }
+    }
     
     private void tileSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tileSelectorActionPerformed
 
@@ -271,28 +295,7 @@ public class Tools extends javax.swing.JFrame {
     }//GEN-LAST:event_tileSelectorActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        switch (player) {
-            case 0:
-                playerName.setText("Human");
-                player = 1;
-                pTiles.refillPlayerTiles();
-                break;
-            case 1:
-                playerName.setText("BT");
-                player = 0;
-                long start = System.nanoTime();
-                puntosBackTracking += BackTracking.correrBackTracking();
-                long end = System.nanoTime();
-                long tiempo = ((end - start));
-                System.out.println(tiempo +" ns");
-                puntosBT.setText(String.valueOf(puntosBackTracking));
-                break;
-            /*case 2:
-                playerName.setText("BTI");
-                player = 0;
-                //Aquí va la llamada al back tracking inteligente*/
-        }
-        updateTileSelector();
+        nextPlayer();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -310,6 +313,14 @@ public class Tools extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+       
+    }//GEN-LAST:event_formKeyPressed
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+ 
+    }//GEN-LAST:event_formKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -325,13 +336,11 @@ public class Tools extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel playerName;
     private javax.swing.JLabel puntosBT;
     private javax.swing.JLabel puntosBTI;
-    private javax.swing.JLabel puntosH;
     private javax.swing.JTextField tColumnas;
     private javax.swing.JTextField tFilas;
     private javax.swing.JComboBox<String> tileSelector;

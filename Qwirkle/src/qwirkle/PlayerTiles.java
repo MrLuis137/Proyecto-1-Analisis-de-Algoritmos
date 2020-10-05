@@ -92,20 +92,22 @@ public class PlayerTiles {
     public String popBactrackingTiles(int position){
         String tile = bacrackingTiles.get(position);
         humanTiles.remove(tile);
-        //humanTiles.add("n");
         return tile;
     }
     public String popBactrackingTiles(String tile){
         bacrackingTiles.remove(tile);
-        //bacrackingTiles.add("n");
         return tile;
     }
     
     
     public String popSmartBactrackingTiles(int position){
         String tile = smartBactrakingTiles.get(position);
-        humanTiles.remove(tile);
-        //humanTiles.add("n");
+        smartBactrakingTiles.remove(tile);
+        return tile;
+    }
+    
+    public String popSmartBactrackingTiles(String tile){
+        smartBactrakingTiles.remove(tile);
         return tile;
     }
     

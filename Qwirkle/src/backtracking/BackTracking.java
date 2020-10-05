@@ -17,14 +17,12 @@ public class BackTracking {
     private static boolean color = false;
     private static boolean shape = false;
     private static ArrayList posibilities = new ArrayList();
-    
+    private static boolean isStarted = false; 
     public static ArrayList<Integer> puntos = new ArrayList<>();
     public static ArrayList<Integer> qwirkles = new ArrayList<>();
     
     public static int correrBackTracking(){
-        backTracking( tiles.getBactackingTiles(), 0, 0, 1,false, new ArrayList<Insertion>());
-        //
-        //System.out.println(posibilities.size());
+        backTracking( tiles.getBactackingTiles(), 1,false, new ArrayList<Insertion>());
         for(Object o : posibilities){
             ArrayList<Insertion> posibilitie = (ArrayList<Insertion>) o;
             contarPuntos(matrix, posibilitie);
@@ -47,9 +45,51 @@ public class BackTracking {
         posibilities.clear();
         puntos.clear();
         return highScore;
-        
-        
     }
+    
+    public static int correrBackTrackingInteligente(){
+        if(!isStarted){
+            for(int i = 0; i < matrix.getLines(); i++ ){
+                for(int j = 0; j < matrix.getColumns(); j++){
+                    if(matrix.getTile(i, j).length() > 1){
+                        isStarted = true;
+                        j = matrix.getColumns();
+                        i = matrix.getLines();
+                    }
+                }
+            }
+            if(!isStarted){
+                String tile = tiles.popSmartBactrackingTiles(0);
+                matrix.setTile(tile, 6, 6);
+                return 1;
+            }
+        }
+         backTracking( tiles.getSmartBacktrackingTiles(), 1,false, new ArrayList<Insertion>());
+        for(Object o : posibilities){
+            ArrayList<Insertion> posibilitie = (ArrayList<Insertion>) o;
+            contarPuntos(matrix, posibilitie);
+        }
+        int higestScoreIndex = 0, highScore = 0;
+        for(int i = 0; i < puntos.size();i++){
+            int tempScore = puntos.get(i) - qwirkles.get(i);
+            if(tempScore > highScore){
+                highScore = tempScore;
+                higestScoreIndex = i;
+                
+            }
+        }
+        if(posibilities.size() > 0){
+            ArrayList<Insertion> movement = (ArrayList<Insertion>) posibilities.get(higestScoreIndex);
+           matrix.setTiles(movement);
+           for(Insertion ins : movement){
+               tiles.popSmartBactrackingTiles(ins.tile);
+           }
+        }
+        posibilities.clear();
+        puntos.clear();
+        return highScore;
+    }
+        
     
     //=======================================================================================================================//
     //                      INICIO DE LAS FUNCIONES DEL BACK TRACKING
@@ -57,7 +97,7 @@ public class BackTracking {
     //=======================================================================================================================//
     
    
-    private static  void backTracking(ArrayList<String> hand, int line, int column, int action,boolean lookShape, ArrayList<Insertion> insertList){
+    private static  void backTracking(ArrayList<String> hand, int action,boolean lookShape, ArrayList<Insertion> insertList){
         if(hand.isEmpty()){
             return;
         }
@@ -74,13 +114,13 @@ public class BackTracking {
                             for(String tile :hand){
                                 if(!isAValidInsertion(i, j, tile)){continue;}
                                 matrix.setTileWithoutGrow(tile,i, j);
-                                //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
+                                /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
                                  try {                                                                            //
                                      Thread.sleep(1000);                                                          //
                                  } catch (InterruptedException ex) {                                              //
                                      Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
                                  }                                                                                //
-                                 //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||/
+                                 //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
                                  insertList.add( new Insertion(tile,i,j));
                                  posibilities.add(insertList.clone());
                                  ArrayList<String> subHand = (ArrayList<String>)hand.clone();
@@ -120,13 +160,13 @@ public class BackTracking {
                     insertList.add( new Insertion(tile,line,column));
                     matrix.setTileWithoutGrow(tile, line, column);
 
-                    //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+                    /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
                     try {                                                                            //
                         Thread.sleep(1000);                                                          //
                     } catch (InterruptedException ex) {                                              //
                         Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
                     }                                                                                //
-                    //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||/
+                    //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
                     ArrayList<String> subHand = (ArrayList<String>)hand.clone();
                     subHand.remove(tile);
                     verticalInsertion(subHand, (action == 3)? line + 1: line -1, column, insertList, shape, action);
@@ -153,13 +193,13 @@ public class BackTracking {
                         insertList.add( new Insertion(tile,line,column));
                         matrix.setTileWithoutGrow(tile, line, column);
 
-                       //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+                       /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
                         try {                                                                            //
                             Thread.sleep(1000);                                                          //
                         } catch (InterruptedException ex) {                                              //
                             Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
                         }                                                                                //
-                        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||/
+                        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
                         ArrayList<String> subHand = (ArrayList<String>)hand.clone();
                         subHand.remove(tile);
                         horizontalInsertion( subHand, line, (action == 2)? column+1:column-1, insertList, lookShape, action);
