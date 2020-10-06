@@ -25,13 +25,13 @@ public class PlayerTiles {
     private void fillPlayersTiles(){
         ///****SOLO PARA TESTEO
         ArrayList<String> t = new ArrayList<String>();
-        t.add("O-5");
-        t.add("O-2");
-        t.add("Y-2");
-        t.add("Y-4");
-        t.add("Y-5");
-        t.add("R-5");
-        //bacrackingTiles = t;
+        t.add("O-1");
+        t.add("R-1");
+        //t.add("Y-2");
+        //t.add("Y-4");
+        //t.add("Y-5");
+        //t.add("R-5");
+        //smartBactrakingTiles = t;
         ///****SOLO PARA TESTEO
         
         

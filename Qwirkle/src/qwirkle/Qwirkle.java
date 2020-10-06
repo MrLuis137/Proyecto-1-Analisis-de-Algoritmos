@@ -43,16 +43,16 @@ public class Qwirkle extends PApplet{
         
         //i.add(new Insertion("P-5", 4, 7)); 
         //BoardMatrix.getBoardMatrix().setTiles(i); 
-        /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
-        i.add(new Insertion("P-5", 4, 7));                                              //
-        i.add(new Insertion("Y-5", 4, 6));                                              //
-        i.add(new Insertion("G-5", 4, 5));                                              //
-        i.add(new Insertion("G-3", 3, 5));                                              //
-        i.add(new Insertion("G-5", 5, 6));                                              //
-        i.add(new Insertion("B-5", 6, 6));                                              //
-        i.add(new Insertion("G-5", 6, 5));                                              //
-        matriz.setTiles(i);                                                             //
-        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||*/
+        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||
+        i.add(new Insertion("R-2", 6, 7));                                              //
+        i.add(new Insertion("R-1", 6, 6));                                              //
+        i.add(new Insertion("Y-1", 7, 6));                                              //
+        i.add(new Insertion("G-1", 8, 6));                                              //
+        //i.add(new Insertion("G-5", 5, 6));                                              //
+        //i.add(new Insertion("B-5", 6, 6));                                              //
+        //i.add(new Insertion("G-5", 6, 5));                                              //
+        //BoardMatrix.getBoardMatrix().setTiles(i);                                                             //
+        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR||||||||||||||||||||||||||||||||||/
         
     }
     
