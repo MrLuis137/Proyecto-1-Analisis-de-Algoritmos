@@ -555,7 +555,7 @@ public class BackTracking {
                     if(ayuda!=1)secundario+=ayuda;
                 }
             }
-            System.out.println("La cantidad es: "+qwirklesL+" en el indice:"+qwirkles.size());
+            //System.out.println("La cantidad es: "+qwirklesL+" en el indice:"+qwirkles.size());
             qwirkles.add(qwirklesL);
             if(secundario==1)puntos.add(principal);
             else puntos.add(principal+secundario);
