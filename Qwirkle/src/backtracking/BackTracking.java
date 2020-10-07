@@ -45,6 +45,7 @@ public class BackTracking {
         }
         posibilities.clear();
         puntos.clear();
+        qwirkles.clear();
         return highScore;
     }
     
@@ -65,67 +66,75 @@ public class BackTracking {
                 return 1;
             }
         }
-         backTracking( tiles.getSmartBacktrackingTiles(), 1,false, new ArrayList<Insertion>());
+        backTracking( tiles.getSmartBacktrackingTiles(), 1,false, new ArrayList<Insertion>());
         for(Object o : posibilities){
             ArrayList<Insertion> posibilitie = (ArrayList<Insertion>) o;
             contarPuntos(matrix, posibilitie);
             
         }
+        //System.out.println("----------------------------Nuevo--------------------------------");
         int higestScoreIndex = 0, highScore = 0;
         for(int i = 0; i < puntos.size();i++){
-            int tempScore = puntos.get(i) - qwirkles.get(i);
+            int tempScore = puntos.get(i) - (qwirkles.get(i)*6);
             boolean bloks = blocksAPlay((ArrayList<Insertion>)posibilities.get(i), tiles.getSmartBacktrackingTiles());
             if(bloks == true){
-                tempScore--;
+                tempScore-=3;
             }
             if(tempScore > highScore){
                 highScore = tempScore;
-                higestScoreIndex = i;
-                
+                higestScoreIndex = i;    
             }
+            /*/Para pruebas
+            System.out.println("Jugada: "+i+" Pts: "+puntos.get(i)+" Qwk: "+qwirkles.get(i));
+            System.out.println("Valor tem: "+tempScore);
+            System.out.println("Alto: "+higestScoreIndex);
+            System.out.println("");
+            /*/
         }
+        
         int pts = 0;
         if(posibilities.size() > 0){
             pts = puntos.get(higestScoreIndex);
             ArrayList<Insertion> movement = (ArrayList<Insertion>) posibilities.get(higestScoreIndex);
-           matrix.setTiles(movement);
-           for(Insertion ins : movement){
+            matrix.setTiles(movement);
+            for(Insertion ins : movement){
                tiles.popSmartBactrackingTiles(ins.tile);
-           }
+            }
         }
         posibilities.clear();
         puntos.clear();
+        qwirkles.clear();
         return pts;
     }
     
-     private static boolean blocksAPlay(ArrayList<Insertion> play, ArrayList<String> actualHand){
+    private static boolean blocksAPlay(ArrayList<Insertion> play, ArrayList<String> actualHand){
         String[][] matrixCopy = matrix.getCopyOfStructure();
         int lines = matrix.getLines();
         int columns = matrix.getColumns();
         //boolean res = false;
         ArrayList<String> subHand = (ArrayList<String>)actualHand.clone();
-         for(Insertion ins: play){
-             subHand.remove(ins.tile);
-         }
-         for(Insertion ins : play){
-            int tLine = ins.line;
-            int tColumn = ins.column;
-            String tile = ins.tile;
-            matrix.setTileWithoutGrow(tile, tLine, tColumn);
-            String tempTile = matrix.getTile(tLine - 1, tColumn);
-            if(tempTile == "n" || tempTile == "t"){
-                tempTile = matrix.getTile(tLine - 2, tColumn);
-                if(tempTile != null && tempTile != "n" && tempTile != "t"){
-                    for(String t: subHand){
-                        boolean res = isAValidInsertion(tLine - 1, tColumn, t);
-                        if(res == true){
-                            matrix.setStructure(matrixCopy, lines, columns);
-                            return true;
-                        }
-                    }
-                }
-             }
-             tempTile = matrix.getTile(tLine + 1, tColumn);
+        for(Insertion ins: play){
+            subHand.remove(ins.tile);
+        }
+        for(Insertion ins : play){
+           int tLine = ins.line;
+           int tColumn = ins.column;
+           String tile = ins.tile;
+           matrix.setTileWithoutGrow(tile, tLine, tColumn);
+           String tempTile = matrix.getTile(tLine - 1, tColumn);
+           if(tempTile == "n" || tempTile == "t"){
+               tempTile = matrix.getTile(tLine - 2, tColumn);
+               if(tempTile != null && tempTile != "n" && tempTile != "t"){
+                   for(String t: subHand){
+                       boolean res = isAValidInsertion(tLine - 1, tColumn, t);
+                       if(res == true){
+                           matrix.setStructure(matrixCopy, lines, columns);
+                           return true;
+                       }
+                   }
+               }
+            }
+            tempTile = matrix.getTile(tLine + 1, tColumn);
             if(tempTile == "n" || tempTile == "t"){
                 tempTile = matrix.getTile(tLine + 2, tColumn);
                 if(tempTile != null && tempTile != "n" && tempTile != "t"){
@@ -137,37 +146,37 @@ public class BackTracking {
                         }
                     }
                 }
-             }
-             tempTile = matrix.getTile(tLine, tColumn -1);
-             if(tempTile == "n" || tempTile == "t"){
-                tempTile = matrix.getTile(tLine, tColumn -2);
-                if(tempTile != null && tempTile != "n" && tempTile != "t"){
-                    for(String t: subHand){
-                        boolean res = isAValidInsertion(tLine, tColumn - 1, t);
-                        if(res == true){
-                            matrix.setStructure(matrixCopy, lines, columns);
-                            return true;
-                        }
-                    }
-                }
-             }
-             
-             tempTile = matrix.getTile(tLine, tColumn + 1);
-             if(tempTile == "n" || tempTile == "t"){
-                tempTile = matrix.getTile(tLine, tColumn + 2);
-                if(tempTile != null && tempTile != "n" && tempTile != "t"){
-                    for(String t: subHand){
-                        boolean res = isAValidInsertion(tLine, tColumn -1, t);
-                        if(res == true){
-                            matrix.setStructure(matrixCopy, lines, columns);
-                            return true;
-                        }
-                    }
-                }
-             }
-         }
-         matrix.setStructure(matrixCopy, lines, columns);
-         return false;
+            }
+            tempTile = matrix.getTile(tLine, tColumn -1);
+            if(tempTile == "n" || tempTile == "t"){
+               tempTile = matrix.getTile(tLine, tColumn -2);
+               if(tempTile != null && tempTile != "n" && tempTile != "t"){
+                   for(String t: subHand){
+                       boolean res = isAValidInsertion(tLine, tColumn - 1, t);
+                       if(res == true){
+                           matrix.setStructure(matrixCopy, lines, columns);
+                           return true;
+                       }
+                   }
+               }
+            }
+
+            tempTile = matrix.getTile(tLine, tColumn + 1);
+            if(tempTile == "n" || tempTile == "t"){
+               tempTile = matrix.getTile(tLine, tColumn + 2);
+               if(tempTile != null && tempTile != "n" && tempTile != "t"){
+                   for(String t: subHand){
+                       boolean res = isAValidInsertion(tLine, tColumn -1, t);
+                       if(res == true){
+                           matrix.setStructure(matrixCopy, lines, columns);
+                           return true;
+                       }
+                   }
+               }
+            }
+        }
+        matrix.setStructure(matrixCopy, lines, columns);
+        return false;
     }
         
     private static void delay(){
@@ -483,14 +492,16 @@ public class BackTracking {
                     if(!"n".equals(celda)&&!"t".equals(celda)){//+++++++++++++++Ver si tiene vecino abajo
                         for (int i = fila+1; i < matrix.getLines(); i++){
                             celda=matrix.getTile(i, colum);
-                            if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
-                            else break;}
+                            if(!"n".equals(celda)&&!"t".equals(celda)){
+                                ayuda++; 
+                            }else break;}
                     }else{celda=matrix.getTile(fila-1, colum);
                         if(!"n".equals(celda)&&!"t".equals(celda)){//+++++++++++Ver si tiene vecino arriba
                             for (int i = fila-1; i >-1; i--){
                                 celda=matrix.getTile(i, colum);
-                                if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
-                                else break;}
+                                if(!"n".equals(celda)&&!"t".equals(celda)){
+                                   ayuda++; 
+                                }else break;}
                         }
                     }
                     if(ayuda==6)ayuda+=6;
@@ -527,14 +538,16 @@ public class BackTracking {
                     if(!"n".equals(celda)&&!"t".equals(celda)){//_______________Ver si tiene vecino derecha
                         for (int i = colum+1; i < matrix.getColumns(); i++){
                             celda=matrix.getTile(fila, i);
-                            if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
-                            else break;}  
+                            if(!"n".equals(celda)&&!"t".equals(celda)){
+                                ayuda++; 
+                            }else break;}  
                     }else{celda=matrix.getTile(fila, colum-1);
                         if(!"n".equals(celda)&&!"t".equals(celda)){//___________Ver si tiene vecino izq
                             for (int i = colum-1; i > -1; i--){
                                 celda=matrix.getTile(fila, i);
-                                if(!"n".equals(celda)&&!"t".equals(celda))ayuda++;
-                                else break;}      
+                                if(!"n".equals(celda)&&!"t".equals(celda)){
+                                   ayuda++; 
+                                }else break;}      
                         }
                     }
                     if(ayuda==6)ayuda+=6;
@@ -542,6 +555,7 @@ public class BackTracking {
                     if(ayuda!=1)secundario+=ayuda;
                 }
             }
+            System.out.println("La cantidad es: "+qwirklesL+" en el indice:"+qwirkles.size());
             qwirkles.add(qwirklesL);
             if(secundario==1)puntos.add(principal);
             else puntos.add(principal+secundario);
