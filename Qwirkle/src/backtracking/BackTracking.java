@@ -348,10 +348,7 @@ public class BackTracking {
     private static boolean isAValidInsertion(int i, int j, String tile){
         if(!(matrix.getTile(i, j).equals("n") || matrix.getTile(i, j).equals("t"))){return false;}
         boolean valid= true;
-        String tileUp = matrix.getTile(i-1, j);
-        String tileDown = matrix.getTile(i+1, j);
-        String tileLeft = matrix.getTile(i, j-1);
-        String tileRight = matrix.getTile(i, j+1);
+
         for(int li = i+1; li <= i+7; li++){
             String tempTile = matrix.getTile(li, j);
             if(tempTile != null && tempTile.length() == 3){
