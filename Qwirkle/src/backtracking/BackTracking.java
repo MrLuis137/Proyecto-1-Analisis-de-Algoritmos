@@ -108,28 +108,43 @@ public class BackTracking {
     }
     
     private static boolean blocksAPlay(ArrayList<Insertion> play, ArrayList<String> actualHand){
+        //Obtiene una copia de la matriz
         String[][] matrixCopy = matrix.getCopyOfStructure();
         int lines = matrix.getLines();
         int columns = matrix.getColumns();
         //boolean res = false;
+        //Copia la mano actual
         ArrayList<String> subHand = (ArrayList<String>)actualHand.clone();
+        //Elimina las fichas en la copia de la mano
+        //esto con el fin de que coincidan con la mano resultante luego de aplicar la jugada
         for(Insertion ins: play){
             subHand.remove(ins.tile);
         }
+        //Si no quedan fichas para insertar entonces no bloquea futuras jugadas y retorna false
+        if(subhand.size() == 0){return false}
+        //Si tiene fichas en la mano, prueba para cada una
         for(Insertion ins : play){
            int tLine = ins.line;
            int tColumn = ins.column;
            String tile = ins.tile;
+           //Inserta la ficha correspondiente en la jugada
            matrix.setTileWithoutGrow(tile, tLine, tColumn);
+           //Hace una comprovación de los espacios adyacentes, si hay una ficha en el espacio adyacente
+           //se detiene si no hay ficha
            String tempTile = matrix.getTile(tLine - 1, tColumn);
+            //Si hay un esacio vacio en la ficha adyacente
            if(tempTile == "n" || tempTile == "t"){
                tempTile = matrix.getTile(tLine - 2, tColumn);
+               // Si el espacio siguiente en la misma direccion existe y no está vacio
                if(tempTile != null && tempTile != "n" && tempTile != "t"){
+                   //Comprueba para cada ficha en la mano si puede hacer una jugada en esa posición
                    for(String t: subHand){
                        boolean res = isAValidInsertion(tLine - 1, tColumn, t);
+                       //Si la inserción de la ficha es valida, entonces la jugada no está bloqueada
                        if(res == true){
+                           //reestablece la matriz y retorna false(No hay bloqueo)
                            matrix.setStructure(matrixCopy, lines, columns);
-                           return true;
+                           return false;
                        }
                    }
                }
@@ -142,7 +157,7 @@ public class BackTracking {
                         boolean res = isAValidInsertion(tLine + 1, tColumn, t);
                         if(res == true){
                             matrix.setStructure(matrixCopy, lines, columns);
-                            return true;
+                            return false;
                         }
                     }
                 }
@@ -155,7 +170,7 @@ public class BackTracking {
                        boolean res = isAValidInsertion(tLine, tColumn - 1, t);
                        if(res == true){
                            matrix.setStructure(matrixCopy, lines, columns);
-                           return true;
+                           return false;
                        }
                    }
                }
@@ -169,14 +184,16 @@ public class BackTracking {
                        boolean res = isAValidInsertion(tLine, tColumn -1, t);
                        if(res == true){
                            matrix.setStructure(matrixCopy, lines, columns);
-                           return true;
+                           return false;
                        }
                    }
                }
             }
         }
+        //reestablece la matriz
         matrix.setStructure(matrixCopy, lines, columns);
-        return false;
+        //retorna true(Hay bloqueo);
+        return true;
     }
         
     private static void delay(){
