@@ -6,7 +6,7 @@
 package Board;
 
 
-import backtracking.BackTracking;
+import backtracking.Backtracking;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -88,6 +88,7 @@ public class Tools extends javax.swing.JFrame {
         puntosBTI = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         playerName = new javax.swing.JLabel();
+        chkPasoAPaso = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -147,6 +148,18 @@ public class Tools extends javax.swing.JFrame {
 
         playerName.setText("Human");
 
+        chkPasoAPaso.setText("Mostrar paso a paso");
+        chkPasoAPaso.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkPasoAPasoStateChanged(evt);
+            }
+        });
+        chkPasoAPaso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkPasoAPasoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,16 +167,12 @@ public class Tools extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(jLabel2)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,10 +184,18 @@ public class Tools extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(error))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addContainerGap(177, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
+                .addGap(44, 44, 44))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel7)
@@ -189,14 +206,8 @@ public class Tools extends javax.swing.JFrame {
                                         .addComponent(puntosBTI)
                                         .addComponent(puntosBT))
                                     .addComponent(playerName)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                                .addComponent(jButton3)))))
-                .addGap(44, 44, 44))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jButton2)
+                            .addComponent(chkPasoAPaso)
+                            .addComponent(jButton1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -221,9 +232,9 @@ public class Tools extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jButton2)
-                .addGap(40, 40, 40)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(playerName))
@@ -235,7 +246,9 @@ public class Tools extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(puntosBTI))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(chkPasoAPaso)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -272,7 +285,7 @@ public class Tools extends javax.swing.JFrame {
                 playerName.setText("BT");
                 player = 2;
                 long start = System.nanoTime();
-                puntosBackTracking += BackTracking.correrBackTracking();
+                puntosBackTracking += Backtracking.correrBackTracking();
                 
                 long end = System.nanoTime();
                 long tiempo = ((end - start));
@@ -282,7 +295,7 @@ public class Tools extends javax.swing.JFrame {
             case 2:
                 playerName.setText("BTI");
                 player = 0;
-                puntosBackTrackingInteligente += BackTracking.correrBackTrackingInteligente();
+                puntosBackTrackingInteligente += Backtracking.correrBackTrackingInteligente();
                 puntosBTI.setText(String.valueOf(puntosBackTrackingInteligente));
                 break;
         }
@@ -321,12 +334,23 @@ public class Tools extends javax.swing.JFrame {
  
     }//GEN-LAST:event_formKeyTyped
 
+    private void chkPasoAPasoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkPasoAPasoStateChanged
+  
+    }//GEN-LAST:event_chkPasoAPasoStateChanged
+
+    private void chkPasoAPasoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkPasoAPasoMouseClicked
+        Backtracking.pasoAPaso = (chkPasoAPaso.isSelected());
+        System.out.println(chkPasoAPaso.isSelected());
+        System.out.println(Backtracking.pasoAPaso);
+    }//GEN-LAST:event_chkPasoAPasoMouseClicked
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox chkPasoAPaso;
     private javax.swing.JLabel error;
     private javax.swing.JLabel icon;
     private javax.swing.JButton jButton1;

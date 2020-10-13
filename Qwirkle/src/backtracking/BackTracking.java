@@ -11,19 +11,18 @@ import qwirkle.PlayerTiles;
  *
  * @author lalem
  */
-public class BackTracking {
+public class Backtracking {
     
+    public static boolean pasoAPaso = false;
     private static BoardMatrix  matrix = BoardMatrix.getBoardMatrix();
     private static PlayerTiles tiles = PlayerTiles.getPlayerTiles();
-    private static boolean color = false;
-    private static boolean shape = false;
     private static ArrayList posibilities = new ArrayList();
     private static boolean isStarted = false; 
     public static ArrayList<Integer> puntos = new ArrayList<>();
     public static ArrayList<Integer> qwirkles = new ArrayList<>();
     
     public static int correrBackTracking(){
-        backTracking( tiles.getBactackingTiles(), 1,false, new ArrayList<Insertion>());
+        backTracking(tiles.getBactackingTiles());
         for(Object o : posibilities){
             ArrayList<Insertion> posibilitie = (ArrayList<Insertion>) o;
             contarPuntos(matrix, posibilitie);
@@ -66,13 +65,12 @@ public class BackTracking {
                 return 1;
             }
         }
-        backTracking( tiles.getSmartBacktrackingTiles(), 1,false, new ArrayList<Insertion>());
+        backTracking( tiles.getSmartBacktrackingTiles() );
         for(Object o : posibilities){
             ArrayList<Insertion> posibilitie = (ArrayList<Insertion>) o;
             contarPuntos(matrix, posibilitie);
             
         }
-        //System.out.println("----------------------------Nuevo--------------------------------");
         int higestScoreIndex = 0, highScore = 0;
         for(int i = 0; i < puntos.size();i++){
             int tempScore = puntos.get(i) - (qwirkles.get(i)*6);
@@ -112,7 +110,6 @@ public class BackTracking {
         String[][] matrixCopy = matrix.getCopyOfStructure();
         int lines = matrix.getLines();
         int columns = matrix.getColumns();
-        //boolean res = false;
         //Copia la mano actual
         ArrayList<String> subHand = (ArrayList<String>)actualHand.clone();
         //Elimina las fichas en la copia de la mano
@@ -121,7 +118,7 @@ public class BackTracking {
             subHand.remove(ins.tile);
         }
         //Si no quedan fichas para insertar entonces no bloquea futuras jugadas y retorna false
-        if(subhand.size() == 0){return false}
+        if(subHand.size() == 0){return false;}
         //Si tiene fichas en la mano, prueba para cada una
         for(Insertion ins : play){
            int tLine = ins.line;
@@ -200,13 +197,14 @@ public class BackTracking {
         /*************************DESCOMENTAR PARA*************************/
         /*********************VER LAS JUGADAS DEL BT***********************/
        
-        /*/|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
+        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||
+        if(pasoAPaso == false){return;}
         try {                                                                            //
             Thread.sleep(1000);                                                          //
         } catch (InterruptedException ex) {                                              //
-            Logger.getLogger(BackTracking.class.getName()).log(Level.SEVERE, null, ex);  //
+            Logger.getLogger(Backtracking.class.getName()).log(Level.SEVERE, null, ex);  //
         }                                                                                //
-        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||*/
+        //|||||||||||||||||SOLO CON PROPOSITO DE PROBAR|||||||||||||||||||||||||||||||||||/
     }
     
     
@@ -218,52 +216,50 @@ public class BackTracking {
    
     
     
-    private static  void backTracking(ArrayList<String> hand, int action,boolean lookShape, ArrayList<Insertion> insertList){
+    private static  void backTracking(ArrayList<String> hand){
         if(hand.isEmpty()){
             return;
         }
         //Dado que BoardMatrix utiliza el patron Singleton, se hace una copia de la estructura original para ser restaurada al finalizar
         String[][] matrixCopy = matrix.getCopyOfStructure();
+        ArrayList<Insertion> insertList = new ArrayList<Insertion>();
         int lines = matrix.getLines();
         int columns = matrix.getColumns();
-            //action: 1 = recorrer toda la matriz
-        if(action == 1){
-                for(int i = 0; i < matrix.getLines(); i++){
-                    for(int j = 0; j < matrix.getColumns(); j++){
-                        //Si en la posición i,j hay una "t", reviza si es posible insertar la ficha.
-                        if(matrix.getTile(i, j).equals("t") && isAValidPosition(i,j)){
-                            for(String tile :hand){
-                                if(!isAValidInsertion(i, j, tile)){continue;}
-                                matrix.setTileWithoutGrow(tile,i, j);
-                                //||||||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||
-                                                         delay();                                 //
-                                //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
-                                 insertList.add( new Insertion(tile,i,j));
-                                 posibilities.add(insertList.clone());
-                                 ArrayList<String> subHand = (ArrayList<String>)hand.clone();
-                                 subHand.remove(tile);
-                                //Vertical hacia arriba
-                                verticalInsertion( subHand,i-1, j, insertList, lookShape, -3);
+        for(int i = 0; i < matrix.getLines(); i++){
+            for(int j = 0; j < matrix.getColumns(); j++){
+                //Si en la posición i,j hay una "t", reviza si es posible insertar la ficha.
+                if(matrix.getTile(i, j).equals("t") && isAValidPosition(i,j)){
+                    for(String tile :hand){
+                        if(!isAValidInsertion(i, j, tile)){continue;}
+                        matrix.setTileWithoutGrow(tile,i, j);
+                        //||||||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||
+                                                 delay();                                 //
+                        //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
+                         insertList.add( new Insertion(tile,i,j));
+                         posibilities.add(insertList.clone());
+                         ArrayList<String> subHand = (ArrayList<String>)hand.clone();
+                         subHand.remove(tile);
+                        //Vertical hacia arriba
+                        verticalInsertion( subHand,i-1, j, insertList, -3);
 
-                                //vertical hacia abajo
-                                verticalInsertion( subHand,i+1, j, insertList, lookShape, 3);
+                        //vertical hacia abajo
+                        verticalInsertion( subHand,i+1, j, insertList, 3);
 
-                                //INSERCIÓN HORIZONTAL DERECHA
-                                horizontalInsertion( subHand,i, j+1, insertList, lookShape, 2);
+                        //INSERCIÓN HORIZONTAL DERECHA
+                        horizontalInsertion( subHand,i, j+1, insertList, 2);
 
-                                //INSERCIÓN HORIZONTAL IZQUIERDA
-                                horizontalInsertion(subHand,i, j-1, insertList, lookShape, -2);
-                                insertList.remove(insertList.size()-1);
-                                matrix.setStructure(matrixCopy, lines, columns); 
-                            }
-                        }//If "t"
-                    }//For j
-                }//For i
-            }
+                        //INSERCIÓN HORIZONTAL IZQUIERDA
+                        horizontalInsertion(subHand,i, j-1, insertList, -2);
+                        insertList.remove(insertList.size()-1);
+                        matrix.setStructure(matrixCopy, lines, columns); 
+                    }
+                }//If "t"
+            }//For j
+        }//For i
     }//end of function
     
     private static void verticalInsertion( ArrayList<String> hand, int line, int column,
-                ArrayList<Insertion> insertList, boolean lookShape, int action ){
+                ArrayList<Insertion> insertList, int action ){
         if(hand.isEmpty()){
             return;
         }
@@ -281,7 +277,7 @@ public class BackTracking {
                     //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
                     ArrayList<String> subHand = (ArrayList<String>)hand.clone();
                     subHand.remove(tile);
-                    verticalInsertion(subHand, (action == 3)? line + 1: line -1, column, insertList, shape, action);
+                    verticalInsertion(subHand, (action == 3)? line + 1: line -1, column, insertList, action);
                     posibilities.add(insertList.clone());
                     matrix.setStructure(matrixCopy, lines, columns); 
                     insertList.remove(insertList.size()-1);
@@ -290,7 +286,7 @@ public class BackTracking {
         }//if validPosition
     }
     
-    private static void horizontalInsertion(ArrayList<String> hand, int line,int column,ArrayList<Insertion> insertList, boolean lookShape,int action){
+    private static void horizontalInsertion(ArrayList<String> hand, int line,int column,ArrayList<Insertion> insertList,int action){
             //INSERCIÓN HORIZONTAL DERECHA
         if(hand.isEmpty()){
             return;
@@ -310,7 +306,7 @@ public class BackTracking {
                         //|||||||||||||||||DELAY DEL HILO||||||||||||||||||||||||||||||||||/
                         ArrayList<String> subHand = (ArrayList<String>)hand.clone();
                         subHand.remove(tile);
-                        horizontalInsertion( subHand, line, (action == 2)? column+1:column-1, insertList, lookShape, action);
+                        horizontalInsertion( subHand, line, (action == 2)? column+1:column-1, insertList, action);
                         posibilities.add(insertList.clone());
                         insertList.remove(insertList.size()-1);
                         matrix.setStructure(matrixCopy, lines, columns); 

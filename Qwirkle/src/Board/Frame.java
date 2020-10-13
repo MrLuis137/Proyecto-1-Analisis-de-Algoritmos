@@ -15,7 +15,7 @@ import java.util.Hashtable;
 import qwirkle.PlayerTiles;
 /**
  *
- * @author lalem
+ * @author author Luis Diego Alemán Z.
  */
 public class Frame{
     

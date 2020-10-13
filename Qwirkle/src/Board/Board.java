@@ -8,7 +8,7 @@ package Board;
 import qwirkle.BoardMatrix;
 /**
  *
- * @author lalem
+ * @author Luis Diego Alemán Z.
  */
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -144,8 +144,6 @@ public class Board{
     int lines = matrix.getLines();
     int columns = matrix.getColumns();
     
-      //System.out.println(lines + " " + columns);
-    //float[][] mAdyacencia = g.getMatrizAdyacencias();
     int y = margenY; 
      //
       for (int i = 0; i < lines; i++) {
@@ -159,13 +157,11 @@ public class Board{
           
           if(matrix.getTile(i, j).length() > 1 ) {
             String tile =  matrix.getTile(i, j);
-            //System.out.println(i + " " + j + " " + tile );
             s = new Tile(sketch, tilesIcons,x, y, tamanio, tamanio, tile.charAt(0),tile.charAt(2));
             tilees.add(s);
           }
           else {
             
-            //System.out.println("entre");
             s = new Tile(sketch,tilesIcons,x, y, tamanio, tamanio, 'n','n');
             tilees.add(s);
             

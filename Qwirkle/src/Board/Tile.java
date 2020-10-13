@@ -14,7 +14,7 @@ import processing.opengl.*;
 
 /**
  *
- * @author lalem
+ * @author author Luis Diego Alemán Z.
  */
 public class Tile{
 

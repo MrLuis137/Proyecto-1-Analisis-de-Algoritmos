@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import processing.core.PImage;
 import Board.Tools;
-import backtracking.BackTracking;
+import backtracking.Backtracking;
 import backtracking.Insertion;
 /**
  *
