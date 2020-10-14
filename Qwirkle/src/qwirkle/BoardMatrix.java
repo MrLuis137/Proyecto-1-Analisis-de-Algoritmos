@@ -114,7 +114,6 @@ public class BoardMatrix {
     
     //Setea el valor de un Tile sin hacer crecer la matriz !!!USAR CON CUIDADO, PUEDE CONDUCIR A UN INDEX OUT OF BOUNDS!!!
     public void setTileWithoutGrow(String piece, int line, int column){
-        //System.out.println(line + " " + column);
         matrix[line][column] = piece;       
         /****delimitado del tablero*******/
         if( matrix[line +1 ][column].equals("n") ){ matrix[line + 1][column] = "t"; }
@@ -147,7 +146,7 @@ public class BoardMatrix {
             for(int i = 7- lastColumn; i>0; i--){
                 aumentarIzquierda();
         } }
-        //System.out.println(lastColumn - (columns-6));
+        
         if(lastColumn >= columns - 7){ 
             for(int i = lastColumn - (columns-8); i>0; i--){
                 aumentarDerecha();

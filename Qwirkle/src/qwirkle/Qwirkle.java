@@ -75,7 +75,6 @@ public class Qwirkle extends PApplet{
         stroke(0);
         strokeWeight(1);
         background(255);
-        //System.out.println(mouseX+ " " + mouseY);
         board.run();
         frame.run();
     }
@@ -107,7 +106,6 @@ public class Qwirkle extends PApplet{
           for(int j = 0; j < 6; j++ ){
               PImage image = loadImage("/assets/"+ colors[i] + "-" + (j+1) + ".png");
               tilesIcons.put(j, image);
-              //System.out.println("key: " + colors[i] + "-" + (j+1));
               tilesIcons.put( (colors[i] + "-" + (j+1)), image);
           }
       }

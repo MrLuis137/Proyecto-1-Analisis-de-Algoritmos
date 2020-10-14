@@ -54,7 +54,6 @@ public class Tools extends javax.swing.JFrame {
         try {                
           image = ImageIO.read(new File(route));
        } catch (IOException ex) {
-            System.out.println(ex);
             return;
        }
         icon.setIcon(new ImageIcon(image));
@@ -286,16 +285,19 @@ public class Tools extends javax.swing.JFrame {
                 player = 2;
                 long start = System.nanoTime();
                 puntosBackTracking += Backtracking.correrBackTracking();
-                
                 long end = System.nanoTime();
                 long tiempo = ((end - start));
-                System.out.println(tiempo +" ns");
+                System.out.println("BT" + tiempo +" ns");
                 puntosBT.setText(String.valueOf(puntosBackTracking));
                 break;
             case 2:
                 playerName.setText("BTI");
                 player = 0;
+                start = System.nanoTime();
                 puntosBackTrackingInteligente += Backtracking.correrBackTrackingInteligente();
+                end = System.nanoTime();
+                tiempo = ((end - start));
+                System.out.println("BTI" + tiempo +" ns");
                 puntosBTI.setText(String.valueOf(puntosBackTrackingInteligente));
                 break;
         }

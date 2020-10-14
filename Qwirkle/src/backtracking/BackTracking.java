@@ -473,7 +473,6 @@ public class Backtracking {
             fila=insertList.get(0).line;
             colum=insertList.get(0).column;        
             if(esFila(insertList.get(0),insertList.get(1))){//~~~~~~~~~~~~~~~~~~Cuando es una fila
-                //System.out.println("Es fila");
                 //=============================Contar los puntos de toda la fila
                 //==============================================================
                 celda=matrix.getTile(fila, colum+1);  
@@ -488,7 +487,6 @@ public class Backtracking {
                         celda=matrix.getTile(fila, i);
                         if(!"n".equals(celda)&&!"t".equals(celda))principal++;
                         else break;
-                        //System.out.println("puntos de principal "+principal);
                     }   
                 }if(principal==6)principal+=6;
                 if( principal==5)qwirklesL++;
@@ -518,12 +516,10 @@ public class Backtracking {
                     if( ayuda==5)qwirklesL++;
                     if(ayuda!=1)secundario+=ayuda;
                     
-                    //System.out.println("puntos de secundario "+secundario);
                 }  
             }else{//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Cuando es una columna           
                 //==========================Contar los puntos de toda la columna
                 //==============================================================
-                //System.out.println("Es columna");
                 celda=matrix.getTile(fila+1, colum);  
                 if(!"n".equals(celda)&&!"t".equals(celda)){//___________________Cuando las fichas en la matriz están arriba 
                     for (int i = fila+1; i < matrix.getLines(); i++){
@@ -565,7 +561,6 @@ public class Backtracking {
                     if(ayuda!=1)secundario+=ayuda;
                 }
             }
-            //System.out.println("La cantidad es: "+qwirklesL+" en el indice:"+qwirkles.size());
             qwirkles.add(qwirklesL);
             if(secundario==1)puntos.add(principal);
             else puntos.add(principal+secundario);

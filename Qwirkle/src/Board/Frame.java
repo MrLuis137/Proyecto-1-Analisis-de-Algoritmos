@@ -44,11 +44,9 @@ public class Frame{
         applet.fill(255,255,255);
         applet.rect(x,660, 276, 46);
         ArrayList<String> tiles = pTiles.getHumanTiles();
-        //System.out.println(tiles.toString());
         for(int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).length() == 3){
                  String key = tiles.get(i);
-                //System.out.println(key);
                 PImage icon = (PImage)icons.get(key);
                 applet.image(icon, x +(i*46),660);
             }
@@ -65,7 +63,6 @@ public class Frame{
         for(int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).length() == 3){
                  String key =tiles.get(i);
-                //System.out.println(key);
                 PImage icon = (PImage)icons.get(key);
                 applet.image(icon, x +(i*46),660);
             }
@@ -82,7 +79,6 @@ public class Frame{
         for(int i = 0; i < tiles.size(); i++){
             if(tiles.get(i).length() == 3){
                  String key = tiles.get(i);
-                //System.out.println(key);
                 PImage icon = (PImage)icons.get(key);
                 applet.image(icon, x +(i*46),660);
             }

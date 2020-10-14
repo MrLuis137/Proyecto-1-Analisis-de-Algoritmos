@@ -62,7 +62,6 @@ public class Tile{
  
   private void renderTile(){
       String key = color + "-" + type;
-      //System.out.println(key);
       PImage icon = (PImage)icons.get(key);
       sketch.image(icon, x, y);
   }

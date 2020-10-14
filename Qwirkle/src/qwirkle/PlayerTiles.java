@@ -39,7 +39,6 @@ public class PlayerTiles {
         bacrackingTiles = Bolsa.pop(6);
         
         smartBactrakingTiles = Bolsa.pop(6);
-        //System.out.println(humanTiles.toString());
      
     }
     
