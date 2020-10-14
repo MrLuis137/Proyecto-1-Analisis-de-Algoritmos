@@ -73,10 +73,10 @@ public class Backtracking {
         }
         int higestScoreIndex = 0, highScore = 0;
         for(int i = 0; i < puntos.size();i++){
-            int tempScore = puntos.get(i) - (qwirkles.get(i)*6);
+            int tempScore = puntos.get(i) - (qwirkles.get(i)*4);
             boolean bloks = blocksAPlay((ArrayList<Insertion>)posibilities.get(i), tiles.getSmartBacktrackingTiles());
             if(bloks == true){
-                tempScore-=3;
+                tempScore--;
             }
             if(tempScore > highScore){
                 highScore = tempScore;
